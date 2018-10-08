@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3>Partitioner</h3>
-    <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" placeholder="Type de groupe">
+    <h3>{{ $t('partitioner') }}</h3>
+    <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" :placeholder="$t('groupType')">
     </v-select>
-    <button @click="createGroups">Create groups</button>
+    <button @click="createGroups">{{ $t('createGroups') }}</button>
   </div>
 </template>
 
@@ -38,5 +38,11 @@ export default {
 </script>
 
 <style>
-
+.select input{
+    border-bottom: none !important;
+    height: 34px !important;
+    margin: 0 0 0 8px !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+}
 </style>
