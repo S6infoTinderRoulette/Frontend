@@ -1,5 +1,7 @@
 <template>
+  <div>
   <h3>Matchmaking</h3>
+  </div>
 </template>
 
 <script>

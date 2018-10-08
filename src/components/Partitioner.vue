@@ -2,27 +2,26 @@
   <div>
     <h3>Partitioner</h3>
     <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" placeholder="Type de groupe">
-
     </v-select>
     <button @click="createGroups">Create groups</button>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import vSelect from 'vue-select'
+
 export default {
   name: 'Partitioner',
   components: {
     vSelect
   },
+  computed: mapState([
+    'groupTypes'
+  ]),
   data () {
     return {
-      selectedGroupType: null,
-      groupTypes: [
-        { id: 2, name: 'Tutorat' },
-        { id: 3, name: 'Procédural' },
-        { id: 4, name: 'Projet' }
-      ]
+      selectedGroupType: null
     }
   },
   methods: {
@@ -31,6 +30,9 @@ export default {
         alert(`Groupes de ${this.selectedGroupType.name} créés.`)
       }
     }
+  },
+  created() {
+    this.$store.dispatch('getGroupTypes')
   }
 }
 </script>
