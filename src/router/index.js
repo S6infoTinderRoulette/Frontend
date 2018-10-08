@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Partitioner from '@/components/Partitioner'
+import Matchmaking from '@/components/Matchmaking'
 
 Vue.use(Router)
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Partitioner',
+      component: Partitioner
+    },
+    {
+      path: '/matchmaking',
+      name: 'Matchmaking',
+      component: Matchmaking
     }
   ]
 })
