@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { isNullOrUndefined } from 'util';
 
 export default {
     getClasses(context) {
@@ -14,6 +15,10 @@ export default {
             })
     },
     createGroups(context, {selectedClass, selectedGroupType, groupSizes}) {
-        alert(`Groupes créés pour les paramètres suivants:\nCours: ${selectedClass.name}\nType de groupe: ${selectedGroupType.name}\nGrosseur des groupes: ${groupSizes.toString()}`)
+        let mess = 'Groupes créés pour les paramètres suivants:'
+        if (selectedClass != null) mess += `\nCours: ${selectedClass.name}`
+        if (selectedGroupType != null) mess += `\nType de groupe: ${selectedGroupType.name}`
+        if (groupSizes.length > 0 && groupSizes != '') mess += `\nGrosseur des groupes: ${groupSizes.toString()}`
+        alert(mess)
     }
 }
