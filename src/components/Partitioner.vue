@@ -55,11 +55,4 @@ export default {
 </script>
 
 <style>
-.select input{
-    border-bottom: none !important;
-    height: 34px !important;
-    margin: 0 0 0 8px !important;
-    padding: 0 !important;
-    font-size: 14px !important;
-}
 </style>
