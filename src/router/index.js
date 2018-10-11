@@ -6,11 +6,12 @@ import Matchmaking from '@/components/Matchmaking'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Partitioner',
-      component: Partitioner
+      component: Partitioner,
     },
     {
       path: '/matchmaking',
