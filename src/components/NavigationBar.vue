@@ -1,7 +1,7 @@
 <template>
     <div>
-        <router-link :to="{ name: 'Partitioner'}">Partitioner</router-link>
-        <router-link to="/matchmaking">Matchmaking</router-link>
+        <router-link :to="{ name: 'Partitioner'}">{{ $t('partitioner') }}</router-link>
+        <router-link to="/matchmaking">{{ $t('matchmaking') }}</router-link>
     </div>
 </template>
 
