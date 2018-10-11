@@ -40,7 +40,11 @@ export default {
     },
     createGroups() {
       if (this.selectedGroupType != null) {
-        alert(`Groupes de ${this.selectedGroupType.name} créés.`)
+        this.$store.dispatch('createGroups', {
+          selectedClass: this.selectedClass,
+          selectedGroupType: this.selectedGroupType,
+          groupSizes: this.groupSizes
+        })
       }
     }
   },

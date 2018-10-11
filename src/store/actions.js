@@ -12,5 +12,8 @@ export default {
             .then(function (response) {
                 context.commit('updateGroupTypes', response.data)
             })
+    },
+    createGroups(context, {selectedClass, selectedGroupType, groupSizes}) {
+        alert(`Groupes créés pour les paramètres suivants:\nCours: ${selectedClass.name}\nType de groupe: ${selectedGroupType.name}\nGrosseur des groupes: ${groupSizes.toString()}`)
     }
 }
