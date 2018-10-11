@@ -3,6 +3,10 @@
     <h3>{{ $t('partitioner') }}</h3>
     <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" :placeholder="$t('groupType')">
     </v-select>
+    <div v-for="(groupSize, index) in groupSizes" :key="index">
+      <input type="number" v-model="groupSize.value"/>
+    </div>
+    <button @click="addAGroupSize">+</button>
     <button @click="createGroups">{{ $t('createGroups') }}</button>
   </div>
 </template>
@@ -16,15 +20,21 @@ export default {
   components: {
     vSelect
   },
-  computed: mapState([
-    'groupTypes'
-  ]),
+  computed: {
+    ...mapState([
+      'groupTypes'
+    ])
+  },
   data () {
     return {
-      selectedGroupType: null
+      selectedGroupType: null,
+      groupSizes: [{ value: '' }]
     }
   },
   methods: {
+    addAGroupSize() {
+      this.groupSizes.push({ value: '' })
+    },
     createGroups() {
       if (this.selectedGroupType != null) {
         alert(`Groupes de ${this.selectedGroupType.name} créés.`)
