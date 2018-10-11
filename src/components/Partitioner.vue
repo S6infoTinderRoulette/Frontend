@@ -1,10 +1,11 @@
 <template>
   <div>
     <h3>{{ $t('partitioner') }}</h3>
-    <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" :placeholder="$t('groupType')">
-    </v-select>
+    <v-select class="select" v-model="selectedClass" label="name" :options="classes" :placeholder="$t('classes')"></v-select>
+    <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" :placeholder="$t('groupType')"></v-select>
+    <span>{{ $t('groupSizes') }}</span>
     <div v-for="(groupSize, index) in groupSizes" :key="index">
-      <input type="number" v-model="groupSize.value"/>
+      <input type="number" v-model="groupSizes[index]"/>
     </div>
     <button @click="addAGroupSize">+</button>
     <button @click="createGroups">{{ $t('createGroups') }}</button>
@@ -22,18 +23,20 @@ export default {
   },
   computed: {
     ...mapState([
+      'classes',
       'groupTypes'
     ])
   },
   data () {
     return {
+      selectedClass: null,
       selectedGroupType: null,
-      groupSizes: [{ value: '' }]
+      groupSizes: ['']
     }
   },
   methods: {
     addAGroupSize() {
-      this.groupSizes.push({ value: '' })
+      this.groupSizes.push('')
     },
     createGroups() {
       if (this.selectedGroupType != null) {
@@ -42,7 +45,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getGroupTypes')
+    this.$store.dispatch('getClasses', 'getGroupTypes')
   }
 }
 </script>
