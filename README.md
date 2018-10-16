@@ -19,3 +19,7 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Frontend setup with backend
+
+Install browser plugin that allows CORS, like Allow-Control-Allow-Origin: * for Chrome or CORS everywhere for Firefox. This is to allow the frontend to make AJAX calls to the backend. Only allow for http://localhost:8000/*.
