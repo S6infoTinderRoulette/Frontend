@@ -1,8 +1,8 @@
 <template>
   <div>
     <h3>{{ $t('partitioner') }}</h3>
-    <v-select class="select" v-model="selectedClass" label="name" :options="classes" :placeholder="$t('classes')"></v-select>
-    <v-select class="select" v-model="selectedGroupType" label="name" :options="groupTypes" :placeholder="$t('groupType')"></v-select>
+    <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')"></v-select>
+    <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')"></v-select>
     <span>{{ $t('groupSizes') }}</span>
     <div v-for="(groupSize, index) in groupSizes" :key="index">
       <input type="number" v-model="groupSizes[index]"/>
@@ -49,7 +49,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getClasses', 'getGroupTypes')
+    this.$store.dispatch('getClasses')
+    this.$store.dispatch('getGroupTypes')
   }
 }
 </script>
