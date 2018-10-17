@@ -9,6 +9,11 @@
     </div>
     <button @click="addAGroupSize">+</button>
     <button @click="createGroups">{{ $t('createGroups') }}</button>
+    <div v-for="(group, index) in generatedGroups" :key="index">
+      <div v-for="(student, index1) in group" :key="index1">
+          {{ student.cip }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,7 +29,8 @@ export default {
   computed: {
     ...mapState([
       'classes',
-      'groupTypes'
+      'groupTypes', 
+      'generatedGroups'
     ])
   },
   data () {
