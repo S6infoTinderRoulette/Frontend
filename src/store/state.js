@@ -4,5 +4,8 @@ export default {
     ],
     groupTypes: [
         
+    ],
+    generatedGroups: [
+        
     ]
 }
