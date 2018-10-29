@@ -1,11 +1,6 @@
 export default {
-    classes: [
-        
-    ],
-    groupTypes: [
-        
-    ],
-    generatedGroups: [
-        
-    ]
+    classes: [],
+    numberOfStudentInClass: 0,
+    groupTypes: [],
+    generatedGroups: []
 }

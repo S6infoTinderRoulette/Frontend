@@ -1,8 +1,14 @@
 <template>
   <div>
     <h3>{{ $t('partitioner') }}</h3>
-    <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')"></v-select>
-    <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')"></v-select>
+    <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
+      <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+    </v-select>
+    <p v-if="selectedClass != null">{{ $tc('numberStudentInClass', numberOfStudentInClass, { nb: numberOfStudentInClass }) }}</p>
+    <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
+      <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+    </v-select> 
+
     <span>{{ $t('groupSizes') }}</span>
     <div v-for="(groupSize, index) in groupSizes" :key="index">
       <input type="number" v-model="groupSizes[index]"/>
@@ -30,6 +36,7 @@ export default {
   computed: {
     ...mapState([
       'classes',
+      'numberOfStudentInClass',
       'groupTypes', 
       'generatedGroups'
     ])
@@ -58,6 +65,15 @@ export default {
   created() {
     this.$store.dispatch('getClasses')
     this.$store.dispatch('getGroupTypes')
+  },
+  watch: {
+    selectedClass: function(newlySelectedClass) {
+      if (newlySelectedClass != null) {
+        this.$store.dispatch('getNumberOfStudentInClass', {
+            selectedClass: newlySelectedClass
+          })
+      }
+    }
   }
 }
 </script>

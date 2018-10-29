@@ -9,6 +9,12 @@ export default {
                 context.commit('updateClasses', response.data)
             })
     },
+    getNumberOfStudentInClass(context, {selectedClass}) {
+        axios.get(theAPIUrl + 'memberclass/' + selectedClass.idClass + '/')
+            .then(function (response) {
+                context.commit('updateNumberOfStudentInClass', response.data)
+            })
+    },
     getGroupTypes(context) {
         axios.get(theAPIUrl + 'grouptypes/')
             .then(function (response) {
