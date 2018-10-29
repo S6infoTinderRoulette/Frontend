@@ -9,8 +9,9 @@
     </div>
     <button @click="addAGroupSize">+</button>
     <button @click="createGroups">{{ $t('createGroups') }}</button>
-    <div v-for="(group, index) in generatedGroups" :key="index">
-      <div v-for="(student, index1) in group" :key="index1">
+    <div v-for="(group, index) in generatedGroups" :key="'group' + index">
+      <p>Groupe {{ index + 1 }}</p>
+      <div v-for="(student, index1) in group" :key="'student-' + index1">
           {{ student.cip }}
       </div>
     </div>
