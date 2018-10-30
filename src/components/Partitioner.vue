@@ -15,23 +15,21 @@
     </div>
     <button @click="addAGroupSize">+</button>
     <button @click="createGroups">{{ $t('createGroups') }}</button>
-    <div v-for="(group, index) in generatedGroups" :key="'group' + index">
-      <p>Groupe {{ index + 1 }}</p>
-      <div v-for="(student, index1) in group" :key="'student-' + index1">
-          {{ student.cip }}
-      </div>
-    </div>
+
+    <edit-groups is-creating :group-of-groups="generatedGroups"></edit-groups>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import vSelect from 'vue-select'
+import editGroups from './EditGroups'
 
 export default {
   name: 'Partitioner',
   components: {
-    vSelect
+    vSelect,
+    editGroups
   },
   computed: {
     ...mapState([
