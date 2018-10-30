@@ -21,10 +21,33 @@ export default {
                 context.commit('updateGroupTypes', response.data)
             })
     },
-    createGroups(context, {selectedClass, selectedGroupType, groupSizes}) { 
-        axios.get(theAPIUrl + 'createGroupPerType/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
-        .then(function (response) {
-            context.commit('updateGeneratedGroups', response.data)
+    createGroups(context, {selectedClass, selectedGroupType, groupSizes}) {
+        let noob =  {
+            idClass: selectedClass.idClass,
+            idGroupType: selectedGroupType.idGroupType
+        }
+        if (true) { //checker le button bar affiche quel et prendre la bonne valeur
+            //noob.nbMember = 0
+        } else {
+            noob.sizes = groupSizes
+        }
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'createGroup/',
+            data: noob,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
         })
+        // axios.post(theAPIUrl + 'createGroup/', noob)
+          .then(function (response) {
+            context.commit('updateGeneratedGroups', response.data)
+          })
+          .catch(e => {
+              console.log(e)
+          })
     }
 }
