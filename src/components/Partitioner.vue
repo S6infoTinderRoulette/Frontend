@@ -58,6 +58,7 @@ export default {
   created() {
     this.$store.dispatch('getClasses')
     this.$store.dispatch('getGroupTypes')
+    this.$store.dispatch('login',{router: this.$router})
   }
 }
 </script>

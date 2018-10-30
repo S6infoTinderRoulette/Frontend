@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Partitioner from '@/components/Partitioner'
 import Matchmaking from '@/components/Matchmaking'
+import CAS from '@/components/CAS'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/matchmaking',
       name: 'Matchmaking',
       component: Matchmaking
+    },
+    {
+      path: '/cas',
+      name: 'CAS',
+      component: CAS
     }
   ]
 })

@@ -20,5 +20,13 @@ export default {
         .then(function (response) {
             context.commit('updateGeneratedGroups', response.data)
         })
+    },
+    login(context, {router}) {
+        axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+        axios.get(theAPIUrl + 'index')
+        .then(function (response) {
+            debugger
+            alert(response.data)
+        })
     }
 }
