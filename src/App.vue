@@ -11,6 +11,9 @@ export default {
   name: 'App',
   components: {
     NavigationBar
+  },
+  beforeCreate() {
+    this.$store.dispatch('login')
   }
 }
 </script>

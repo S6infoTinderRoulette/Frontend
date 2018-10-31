@@ -21,12 +21,9 @@ export default {
             context.commit('updateGeneratedGroups', response.data)
         })
     },
-    login(context, {router}) {
-        axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-        axios.get(theAPIUrl + 'index')
-        .then(function (response) {
-            debugger
-            alert(response.data)
-        })
+    login(context) {
+        if (document.cookie === "") {
+            window.location.href = 'http://localhost:8000'
+        }
     }
 }
