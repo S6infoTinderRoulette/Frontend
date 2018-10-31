@@ -56,12 +56,6 @@ export default {
           })
     },
     saveGroups(context, {groupOfGroups, idClass, idGroupType}) {
-        let data = {
-            groupOfGroups, 
-            idClass, 
-            idGroupType
-        }
-        debugger
         axios({
             method: 'post',
             url: theAPIUrl + 'saveGroup/' + idClass + '/' + idGroupType + '/',
