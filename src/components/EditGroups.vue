@@ -24,8 +24,8 @@
 export default {
     props: {
         groupOfGroups: Array,
-        idClass: String,
-        idGroupType: Number,
+        idClass: Object,
+        idGroupType: Object,
         isCreating: Boolean
     },
     methods: {
@@ -33,8 +33,8 @@ export default {
             if (this.isCreating) {
                 this.$store.dispatch('saveGroups', {
                     groupOfGroups: this.groupOfGroups,
-                    idClass: this.idClass,
-                    idGroupType: this.idGroupType
+                    idClass: this.idClass.idClass,
+                    idGroupType: this.idGroupType.idGroupType
                 })
             } else {
                 // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups

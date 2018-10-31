@@ -39,8 +39,8 @@
     <edit-groups v-if="isGroupCreated" 
                 is-creating 
                 :group-of-groups="generatedGroups"
-                :idClass="selectedClass.idClass"
-                :idGroupType="selectedGroupType.idGroupType"></edit-groups>
+                :idClass="selectedClass"
+                :idGroupType="selectedGroupType"></edit-groups>
   </div>
 </template>
 

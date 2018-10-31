@@ -67,5 +67,8 @@ export default {
                 'cache-control': 'no-cache'
             }
         })
+        .then(function (response) {
+            alert('Groupes créés')
+          })
     }
 }
