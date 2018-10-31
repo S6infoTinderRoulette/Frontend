@@ -8,6 +8,9 @@ export default {
     updateGroupTypes (state, groupTypes) {
         state.groupTypes = groupTypes || []
     },
+    updateDefaultNumberOfGroupSize (state, defaultNumberOfGroupSize) {
+        state.defaultNumberOfGroupSize = defaultNumberOfGroupSize || 0;
+    },
     updateGeneratedGroups (state, group) {
         state.generatedGroups = group || []
     }

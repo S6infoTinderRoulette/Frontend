@@ -56,6 +56,7 @@ export default {
       'classes',
       'numberOfStudentInClass',
       'groupTypes', 
+      'defaultNumberOfGroupSize',
       'generatedGroups'
     ]),
     isGroupCreated () {
@@ -102,14 +103,14 @@ export default {
             selectedClass: newlySelectedClass
           })
       }
-    }/* ,
+    },
     selectedGroupType:function(newlySelectedGroupType){
       if(newlySelectedGroupType != null){
         this.$store.dispatch('getDefaultNumberOfGroupSize', {
           selectedGroupType:newlySelectedGroupType
         })
       }
-    } */
+    }
   }
   
 }
