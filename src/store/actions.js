@@ -21,20 +21,20 @@ export default {
                 context.commit('updateGroupTypes', response.data)
             })
     },
-    createGroups(context, {selectedClass, selectedGroupType, groupSizes}) {
-        let noob =  {
+    createGroups(context, {selectedClass, selectedGroupType, newDefaultGroupSize, groupSizes}) {
+        let data =  {
             idClass: selectedClass.idClass,
             idGroupType: selectedGroupType.idGroupType
         }
-        if (true) { //checker le button bar affiche quel et prendre la bonne valeur
-            //noob.nbMember = 0
-        } else {
-            noob.sizes = groupSizes
+        if (newDefaultGroupSize != null) {
+            data.nbMember = newDefaultGroupSize
+        } else if (groupSizes != null) {
+            data.sizes = groupSizes
         }
         axios({
             method: 'post',
             url: theAPIUrl + 'createGroup/',
-            data: noob,
+            data: data,
             async: true,
             crossDomain: true,
             headers: {

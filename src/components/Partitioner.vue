@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ $t('partitioner') }}</h3>
+    <h2>{{ $t('partitioner') }}</h2>
     <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
       <span slot="no-options">{{ $t('selectNoOptions') }}</span>
     </v-select>
@@ -9,14 +9,27 @@
       <span slot="no-options">{{ $t('selectNoOptions') }}</span>
     </v-select> 
 
-    <span>{{ $t('groupSizes') }}</span>
-    <div v-for="(groupSize, index) in groupSizes" :key="index">
-      <input type="number" v-model="groupSizes[index]"/>
+    <div v-for="pill in pills" :key="'pill-' + pill.id">
+      <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
     </div>
-    <button @click="addAGroupSize">+</button>
+
+
+    <div v-if="selectedPillId==1">
+      <p>Nouvelle taille par défaut des groupes</p>
+      <input type="number" v-model="newDefaultGroupSize">
+    </div>
+
+    <div v-if="selectedPillId==2">
+      <span>{{ $t('groupSizes') }}</span>
+      <div v-for="(groupSize, index) in groupSizes" :key="index">
+        <input type="number" v-model="groupSizes[index]"/>
+      </div>
+      <button @click="addAGroupSize">+</button>
+    </div>
+
     <button @click="createGroups">{{ $t('createGroups') }}</button>
 
-    <edit-groups is-creating :group-of-groups="generatedGroups"></edit-groups>
+    <edit-groups v-if="isGroupCreated" is-creating :group-of-groups="generatedGroups"></edit-groups>
   </div>
 </template>
 
@@ -37,13 +50,23 @@ export default {
       'numberOfStudentInClass',
       'groupTypes', 
       'generatedGroups'
-    ])
+    ]),
+    isGroupCreated () {
+      return this.generatedGroups !== undefined && this.generatedGroups.length !== 0
+    } 
   },
   data () {
     return {
       selectedClass: null,
       selectedGroupType: null,
-      groupSizes: ['']
+      groupSizes: [''],
+      newDefaultGroupSize: null,
+      pills: [
+        { id: 0, description: 'Taille de groupes par défaut'},
+        { id: 1, description: 'Changer la taille de groupes par défaut'},
+        { id: 2, description: 'Personnaliser'}
+      ],
+      selectedPillId: 0
     }
   },
   methods: {
@@ -55,7 +78,8 @@ export default {
         this.$store.dispatch('createGroups', {
           selectedClass: this.selectedClass,
           selectedGroupType: this.selectedGroupType,
-          groupSizes: this.groupSizes
+          newDefaultGroupSize: this.selectedPillId === 1 ? this.newDefaultGroupSize : null,
+          groupSizes: this.selectedPillId === 2 ? this.groupSizes : null
         })
       }
     }
