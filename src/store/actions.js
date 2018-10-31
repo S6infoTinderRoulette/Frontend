@@ -21,6 +21,12 @@ export default {
                 context.commit('updateGroupTypes', response.data)
             })
     },
+    getDefaultNumberOfGroupSize(context, {selectedGroupType}) {
+        axios.get(theAPIUrl + 'grouptype/defaultValue/' + selectedGroupType.idGroupType +'/' )
+            .then(function (response) {
+                context.commit('updateDefaultNumberOfGroupSize', response.data)
+            })
+    },
     createGroups(context, {selectedClass, selectedGroupType, newDefaultGroupSize, groupSizes}) {
         let data =  {
             idClass: selectedClass.idClass,
