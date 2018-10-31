@@ -36,7 +36,11 @@
 
     <button @click="createGroups">{{ $t('createGroups') }}</button>
 
-    <edit-groups v-if="isGroupCreated" is-creating :group-of-groups="generatedGroups"></edit-groups>
+    <edit-groups v-if="isGroupCreated" 
+                is-creating 
+                :group-of-groups="generatedGroups"
+                :idClass="selectedClass.idClass"
+                :idGroupType="selectedGroupType.idGroupType"></edit-groups>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(group, index) in groupOfGroups" :key="'group-' + index">
-            <p>{{ $tc('numberStudentInGroup', nbGroup, nbStudents, { nbGroup: index + 1, nbStudents : group.length} )}}</p>
+            <p>{{ $tc('numberStudentInGroup', index + 1, group.length, { nbGroup: index + 1, nbStudents : group.length} )}}</p>
             <table>
                 <thead>
                     <tr>
@@ -24,14 +24,20 @@
 export default {
     props: {
         groupOfGroups: Array,
+        idClass: String,
+        idGroupType: Number,
         isCreating: Boolean
     },
     methods: {
         saveGroups() {
             if (this.isCreating) {
-                // TODO : createGroups with groupOfGroups
+                this.$store.dispatch('saveGroups', {
+                    groupOfGroups: this.groupOfGroups,
+                    idClass: this.idClass,
+                    idGroupType: this.idGroupType
+                })
             } else {
-                // TODO : updateGroups with groupOfGroups (et les index pls)
+                // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
             }
         }
     }

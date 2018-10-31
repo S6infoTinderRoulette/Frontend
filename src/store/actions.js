@@ -42,12 +42,30 @@ export default {
                 'cache-control': 'no-cache'
             }
         })
-        // axios.post(theAPIUrl + 'createGroup/', noob)
           .then(function (response) {
             context.commit('updateGeneratedGroups', response.data)
           })
           .catch(e => {
               console.log(e)
           })
+    },
+    saveGroups(context, {groupOfGroups, idClass, idGroupType}) {
+        let data = {
+            groupOfGroups, 
+            idClass, 
+            idGroupType
+        }
+        debugger
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'saveGroup/' + idClass + '/' + idGroupType + '/',
+            data: groupOfGroups,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
     }
 }
