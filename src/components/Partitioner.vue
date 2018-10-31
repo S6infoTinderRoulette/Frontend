@@ -1,21 +1,28 @@
 <template>
   <div>
-    <h2>{{ $t('partitioner') }}</h2>
-    <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
-      <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-    </v-select>
-    <p v-if="selectedClass != null">{{ $tc('numberStudentInClass', numberOfStudentInClass, { nb: numberOfStudentInClass }) }}</p>
-    <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
-      <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-    </v-select> 
+    <h2>{{ $t('activityPartitioner') }}</h2>
+    <div>
+      <p>{{$t('nameOfActivity')}} :</p>
+      <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
+        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+      </v-select>
+      <p v-if="selectedClass != null">{{ $tc('numberStudentInClass', numberOfStudentInClass, { nb: numberOfStudentInClass }) }}</p>
+    </div>
+    <div>
+      <p>{{$t('TypeOfActivity')}} :</p>
+      <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
+        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+      </v-select> 
+    </div>
 
     <div v-for="pill in pills" :key="'pill-' + pill.id">
       <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
     </div>
+    <p v-if="selectedPillId==0">{{ $tc('defaultNumberOfGroupSize', defaultNumberOfGroupSize, { nb: defaultNumberOfGroupSize }) }}</p>
 
 
     <div v-if="selectedPillId==1">
-      <p>Nouvelle taille par défaut des groupes</p>
+      <p>{{$t('newGroupSize')}} :</p>
       <input type="number" v-model="newDefaultGroupSize">
     </div>
 
@@ -95,8 +102,16 @@ export default {
             selectedClass: newlySelectedClass
           })
       }
-    }
+    }/* ,
+    selectedGroupType:function(newlySelectedGroupType){
+      if(newlySelectedGroupType != null){
+        this.$store.dispatch('getDefaultNumberOfGroupSize', {
+          selectedGroupType:newlySelectedGroupType
+        })
+      }
+    } */
   }
+  
 }
 </script>
 

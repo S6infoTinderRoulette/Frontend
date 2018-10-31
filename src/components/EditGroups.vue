@@ -1,13 +1,22 @@
 <template>
     <div>
-        <h3>EditGroups Component</h3>
         <div v-for="(group, index) in groupOfGroups" :key="'group-' + index">
-            <p>Groupe {{ index + 1 }}</p>
-            <div v-for="(student, index1) in group" :key="'student-' + index1">
-                {{ student.cip }}
-            </div>
+            <p>{{ $tc('numberStudentInGroup', nbGroup, nbStudents, { nbGroup: index + 1, nbStudents : group.length} )}}</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{$t('idCip')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(student, index1) in group" :key="'student-' + index1">
+                        <td>{{ student.cip }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
         </div>
-        <button @click="saveGroups">Sauvegarder les groupes</button>
+        <button @click="saveGroups">{{$t('saveGroups')}}</button>
     </div>
 </template>
 

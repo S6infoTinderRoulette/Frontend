@@ -1,10 +1,18 @@
 export default {
-    partitioner: 'Partitionneur',
+    partitioner:'Partitionner',
+    activityPartitioner: 'Partitionner une activité',
+    nameOfActivity:'Nom de l\'activité',
+    TypeOfActivity:'Type d\'activité',  
     matchmaking: 'Matchmaking',
     classes: 'Cours',
     groupType: 'Type de groupe',
     groupSizes: 'Grosseur des groupes',
     createGroups: 'Créer des groupes',
-    selectNoOptions: 'Aucune options',
-    numberStudentInClass: '0 étudiant dans cette classe | 1 étudiant dans cette classe | {nb} étudiants dans cette classe'
+    selectNoOptions: 'Aucune option',
+    numberStudentInClass: '0 étudiant dans cette classe | 1 étudiant dans cette classe | {nb} étudiants dans cette classe',
+    defaultNumberOfGroupSize:'{nb} étudiants par groupe',
+    idCip: 'CIP',
+    numberStudentInGroup:'Groupe {nbGroup} ({nbStudents} personnes) ',
+    saveGroups:'Sauvegarder les groupes',
+    newGroupSize:'Nouvelle taille par défaut des groupes'
 }
