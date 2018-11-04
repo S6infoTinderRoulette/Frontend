@@ -70,5 +70,10 @@ export default {
         .then(function (response) {
             alert('Groupes créés')
           })
+    },
+    login(context) {
+      if (document.cookie === "") {
+          window.location.href = 'http://localhost:8000'
+      }
     }
 }
