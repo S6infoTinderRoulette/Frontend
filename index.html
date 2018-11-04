@@ -6,6 +6,13 @@
     <title>Frontend</title>
   </head>
   <body>
+    <script>
+    (function() {
+      if (document.cookie === "") {
+        window.location.href = 'http://localhost:8000'
+      }
+    })()
+    </script>
     <app></app>
     <!-- built files will be auto injected -->
   </body>
