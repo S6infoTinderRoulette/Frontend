@@ -9,19 +9,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(student, index1) in group" :key="'student-' + index1">
-                        <td>{{ student.cip }}</td>
-                    </tr>
+                    <draggable class="minheight" :list="group" :options="{ group:'students' }">
+                        <tr v-for="(student, index1) in group" :key="'student-' + index1">
+                            <td>{{ student.cip }}</td>
+                        </tr>
+                    </draggable>
                 </tbody>
             </table>
-            
         </div>
-        <button @click="saveGroups">{{$t('saveGroups')}}</button>
+        <button @click="addGroup">{{ $t('addGroup') }}</button>
+        <button @click="saveGroups">{{ $t('saveGroups') }}</button>
     </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: {
         groupOfGroups: Array,
         idClass: Object,
@@ -29,6 +36,9 @@ export default {
         isCreating: Boolean
     },
     methods: {
+        addGroup() {
+            this.groupOfGroups.push([]);
+        },
         saveGroups() {
             if (this.isCreating) {
                 this.$store.dispatch('saveGroups', {
@@ -39,6 +49,11 @@ export default {
             } else {
                 // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
             }
+        }
+    },
+    watch: {
+        groupOfGroups: function(newGroups) {
+            this.$store.commit('updateGeneratedGroups', this.groupOfGroups)
         }
     }
 }
