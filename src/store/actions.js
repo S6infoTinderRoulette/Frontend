@@ -35,7 +35,7 @@ export default {
         if (newDefaultGroupSize != null) {
             data.nbMember = newDefaultGroupSize
         } else if (groupSizes != null) {
-            data.sizes = groupSizes
+            data.sizes = groupSizes.filter(size => size !== null && size !== undefined && size !== '')
         }
         axios({
             method: 'post',

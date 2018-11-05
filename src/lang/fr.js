@@ -12,7 +12,8 @@ export default {
     numberStudentInClass: '0 étudiant dans cette classe | 1 étudiant dans cette classe | {nb} étudiants dans cette classe',
     defaultNumberOfGroupSize:'{nb} étudiants par groupe',
     idCip: 'CIP',
-    numberStudentInGroup:'Groupe {nbGroup} ({nbStudents} personnes) ',
-    saveGroups:'Sauvegarder les groupes',
-    newGroupSize:'Nouvelle taille par défaut des groupes'
+    numberStudentInGroup: 'Groupe {nbGroup} ({nbStudents} personnes) ',
+    addGroup: 'Ajouter un groupe',
+    saveGroups: 'Sauvegarder les groupes',
+    newGroupSize: 'Nouvelle taille par défaut des groupes'
 }
