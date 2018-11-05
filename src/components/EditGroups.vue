@@ -46,6 +46,11 @@ export default {
                 // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
             }
         }
+    },
+    watch: {
+        groupOfGroups: function(newGroups) {
+            this.$store.commit('updateGeneratedGroups', this.groupOfGroups)
+        }
     }
 }
 </script>

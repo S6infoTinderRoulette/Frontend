@@ -108,7 +108,7 @@ export default {
           })
       }
     },
-    selectedGroupType:function(newlySelectedGroupType){
+    selectedGroupType: function(newlySelectedGroupType){
       if(newlySelectedGroupType != null){
         this.$store.dispatch('getDefaultNumberOfGroupSize', {
           selectedGroupType:newlySelectedGroupType
