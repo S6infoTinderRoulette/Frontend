@@ -9,7 +9,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <draggable :list="group" :options="{ group:'students' }">
+                    <draggable class="minheight" :list="group" :options="{ group:'students' }">
                         <tr v-for="(student, index1) in group" :key="'student-' + index1">
                             <td>{{ student.cip }}</td>
                         </tr>
@@ -17,7 +17,8 @@
                 </tbody>
             </table>
         </div>
-        <button @click="saveGroups">{{$t('saveGroups')}}</button>
+        <button @click="addGroup">{{ $t('addGroup') }}</button>
+        <button @click="saveGroups">{{ $t('saveGroups') }}</button>
     </div>
 </template>
 
@@ -35,6 +36,9 @@ export default {
         isCreating: Boolean
     },
     methods: {
+        addGroup() {
+            this.groupOfGroups.push([]);
+        },
         saveGroups() {
             if (this.isCreating) {
                 this.$store.dispatch('saveGroups', {

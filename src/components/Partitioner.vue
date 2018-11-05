@@ -23,13 +23,13 @@
 
     <div v-if="selectedPillId==1">
       <p>{{$t('newGroupSize')}} :</p>
-      <input type="number" v-model="newDefaultGroupSize">
+      <input type="number" min="0" v-model="newDefaultGroupSize">
     </div>
 
     <div v-if="selectedPillId==2">
       <span>{{ $t('groupSizes') }}</span>
       <div v-for="(groupSize, index) in groupSizes" :key="index">
-        <input type="number" v-model="groupSizes[index]"/>
+        <input type="number" min="0" v-model="groupSizes[index]"/>
       </div>
       <button @click="addAGroupSize">+</button>
     </div>
