@@ -27,6 +27,24 @@ export default {
                 context.commit('updateDefaultNumberOfGroupSize', response.data)
             })
     },
+    getClassesOfStudent(context){
+        axios.get(theAPIUrl + 'memberclass/' + 'student/basm3502' + '/')
+            .then(function (response) {
+                context.commit('updateClassesOfStudent', response.data)
+            })
+    },
+    getActivities(context, {selectedClass} ){
+        axios.get(theAPIUrl + 'activities/associatedTo/' + selectedClass.idClass + '/' )
+            .then(function (response) {
+                context.commit('updateActivities', response.data)
+            })
+    },
+    getNumberOfStudentsForActivity(context, {selectedActivity} ){        
+        axios.get(theAPIUrl + 'activities/' + selectedActivity.idActivity + '/numberOfPartners/' )
+            .then(function (response) {
+                context.commit('updateNumberOfStudentsForActivity', response.data)
+            })
+    },
     createGroups(context, {selectedClass, selectedGroupType, newDefaultGroupSize, groupSizes}) {
         let data =  {
             idClass: selectedClass.idClass,

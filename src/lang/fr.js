@@ -14,5 +14,8 @@ export default {
     idCip: 'CIP',
     numberStudentInGroup:'Groupe {nbGroup} ({nbStudents} personnes) ',
     saveGroups:'Sauvegarder les groupes',
-    newGroupSize:'Nouvelle taille par défaut des groupes'
+    newGroupSize:'Nouvelle taille par défaut des groupes',
+    activityChosen: 'Choix de l\'activité:',
+    activities: 'Activités',
+    numberOfStudentsForActivity: 'Groupe de {nb} étudiants'
 }

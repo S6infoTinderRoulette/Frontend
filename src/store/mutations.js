@@ -13,5 +13,14 @@ export default {
     },
     updateGeneratedGroups (state, group) {
         state.generatedGroups = group || []
+    },
+    updateClassesOfStudent (state, classesOfStudent){
+        state.classesOfStudent = classesOfStudent || []
+    },
+    updateActivities(state, activities){
+        state.activities = activities || []
+    },
+    updateNumberOfStudentsForActivity (state, numberOfStudentsForActivity){
+        state.numberOfStudentsForActivity = numberOfStudentsForActivity || []
     }
 }

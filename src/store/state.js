@@ -3,5 +3,8 @@ export default {
     numberOfStudentInClass: 0,
     defaultNumberOfGroupSize: 0,
     groupTypes: [],
-    generatedGroups: []
+    generatedGroups: [],
+    classesOfStudent: [],
+    activities: [],
+    numberOfStudentsForActivity : 0
 }
