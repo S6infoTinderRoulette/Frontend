@@ -9,19 +9,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(student, index1) in group" :key="'student-' + index1">
-                        <td>{{ student.cip }}</td>
-                    </tr>
+                    <draggable :list="group" :options="{ group:'students' }">
+                        <tr v-for="(student, index1) in group" :key="'student-' + index1">
+                            <td>{{ student.cip }}</td>
+                        </tr>
+                    </draggable>
                 </tbody>
             </table>
-            
         </div>
         <button @click="saveGroups">{{$t('saveGroups')}}</button>
     </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: {
         groupOfGroups: Array,
         idClass: Object,
