@@ -30,6 +30,7 @@
       <span>{{ $t('groupSizes') }}</span>
       <div v-for="(groupSize, index) in groupSizes" :key="index">
         <input type="number" min="0" v-model="groupSizes[index]"/>
+        <button @click="removeSize(index)">x</button>
       </div>
       <button @click="addAGroupSize">+</button>
     </div>
@@ -82,6 +83,9 @@ export default {
     }
   },
   methods: {
+    removeSize(index) {
+      this.groupSizes.splice(index, 1)
+    },
     addAGroupSize() {
       this.groupSizes.push('')
     },
