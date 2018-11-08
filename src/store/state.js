@@ -6,5 +6,8 @@ export default {
     generatedGroups: [],
     classesOfStudent: [],
     activities: [],
-    numberOfStudentsForActivity : 0
+    numberOfStudentsForActivity : 0,
+    freeGroups: [],
+    freeMembers: [],
+    freeGroupsEdited: []
 }
