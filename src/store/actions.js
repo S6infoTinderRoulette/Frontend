@@ -28,7 +28,7 @@ export default {
             })
     },
     getClassesOfStudent(context){
-        axios.get(theAPIUrl + 'memberclass/' + 'student/basm3502' + '/')
+        axios.get(theAPIUrl + 'memberclass/connected/')
             .then(function (response) {
                 context.commit('updateClassesOfStudent', response.data)
             })
