@@ -45,6 +45,18 @@ export default {
                 context.commit('updateNumberOfStudentsForActivity', response.data)
             })
     },
+    getFreeGroups(context, {selectedActivity}){
+        axios.get(theAPIUrl + 'matchmaking/groups/' + selectedActivity.idActivity + '/true/' )
+            .then(function (response) {
+                context.commit('updateFreeGroups', response.data)
+            })
+    },
+    getFreeMembers(context, {selectedActivity}){
+        axios.get(theAPIUrl + 'matchmaking/members/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateFreeMembers', response.data)
+            })
+    },
     createGroups(context, {selectedClass, selectedGroupType, newDefaultGroupSize, groupSizes}) {
         let data =  {
             idClass: selectedClass.idClass,
