@@ -70,5 +70,11 @@ export default {
         .then(function (response) {
             alert('Groupes créés')
           })
+    },
+    getGroups(context, {selectedClass, selectedGroupType}) {
+        axios.get(theAPIUrl + 'groups/' + selectedClass.idClass + '/'+ selectedGroupType.idGroupType)
+            .then(function (response) {
+                context.commit('updateGeneratedGroups', response.data)
+            })
     }
 }
