@@ -16,5 +16,5 @@ export default {
     addGroup: 'Ajouter un groupe',
     saveGroups: 'Sauvegarder les groupes',
     newGroupSize: 'Nouvelle taille par défaut des groupes',
-    groupManager: 'Gestion de groupe'
+    groupManager: 'Gestion de groupes'
 }

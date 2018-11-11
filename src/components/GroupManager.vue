@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ $t('activityPartitioner') }}</h2>
+        <h2>{{ $t('groupManager') }}</h2>
         <div>
         <p>{{$t('nameOfActivity')}} :</p>
         <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
@@ -13,8 +13,7 @@
             <span slot="no-options">{{ $t('selectNoOptions') }}</span>
         </v-select> 
         </div>
-        <edit-groups v-if="isGroupCreated" 
-                is-creating 
+        <edit-groups v-if="isGroupCreated"
                 :group-of-groups="generatedGroups"
                 :idClass="selectedClass"
                 :idGroupType="selectedGroupType"></edit-groups>

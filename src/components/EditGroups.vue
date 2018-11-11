@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(group, index) in groupOfGroups" :key="'group-' + index">
-            <p>{{ $tc('numberStudentInGroup', index + 1, group.length, { nbGroup: index + 1, nbStudents : group.length} )}}</p>
+            <p>{{ $tc('numberStudentInGroup', index + 1, (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length, { nbGroup: index + 1, nbStudents : (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length} )}}</p>
             <table>
                 <thead>
                     <tr>
@@ -9,8 +9,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <draggable class="minheight" :list="group" :options="{ group:'students' }">
-                        <tr v-for="(student, index1) in group" :key="'student-' + index1">
+                    <draggable class="minheight" :list="group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group" :options="{ group:'students' }" @end="onEnd">
+                        <tr v-for="(student, index1) in (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group)" :key="'student-' + index1">
                             <td>{{ student.cip }}</td>
                         </tr>
                     </draggable>
@@ -49,10 +49,8 @@ export default {
             } else {
                 // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
             }
-        }
-    },
-    watch: {
-        groupOfGroups: function(newGroups) {
+        },
+        onEnd() {
             this.$store.commit('updateGeneratedGroups', this.groupOfGroups)
         }
     }
