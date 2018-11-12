@@ -76,5 +76,21 @@ export default {
             .then(function (response) {
                 context.commit('updateGeneratedGroups', response.data)
             })
+    },
+    saveUpdatedGroups(context, {groupOfGroups, idClass, idGroupType}) {
+        axios({
+            method: 'put',
+            url: theAPIUrl + 'saveGroup/' + idClass + '/' + idGroupType + '/',
+            data: groupOfGroups,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+        .then(function (response) {
+            alert('Groupes créés')
+          })
     }
 }

@@ -47,7 +47,11 @@ export default {
                     idGroupType: this.idGroupType.idGroupType
                 })
             } else {
-                // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
+                this.$store.dispatch('saveUpdatedGroups', {
+                    groupOfGroups: this.groupOfGroups,
+                    idClass: this.idClass.idClass,
+                    idGroupType: this.idGroupType.idGroupType
+                })
             }
         },
         onEnd() {
