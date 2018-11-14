@@ -115,11 +115,11 @@ export default {
                 'cache-control': 'no-cache'
             }
         })
-        .then(function (response) {
-            alert('Demande envoyée')
-          })
-          .catch(e => {
-            console.log(e)
-        })
+    },
+    getRequests(context){
+        axios.get(theAPIUrl + 'request/requested/')
+            .then(function (response) {
+                context.commit('updateYourRequests', response.data)
+            })
     }
 }

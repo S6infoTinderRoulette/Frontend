@@ -17,5 +17,6 @@ export default {
     newGroupSize:'Nouvelle taille par défaut des groupes',
     activityChosen: 'Choix de l\'activité:',
     activities: 'Activités',
-    numberOfStudentsForActivity: 'Groupe de {nb} étudiants'
+    numberOfStudentsForActivity: 'Groupe de {nb} étudiants',
+    requests:'Tes demandes :'
 }

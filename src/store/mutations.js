@@ -35,5 +35,8 @@ export default {
     },
     updateFreeMembers(state, freeMembers){
         state.freeMembers = freeMembers || []
+    },
+    updateYourRequests(state, yourRequests){
+        state.yourRequests = yourRequests || []
     }
 }

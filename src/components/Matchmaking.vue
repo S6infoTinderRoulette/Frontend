@@ -16,7 +16,7 @@
       <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
     </div>
     <div v-if="selectedOption == 0" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
-      <button>{{freeGroup.idGroup}}</button>
+      <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
       <tr v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</tr>
     </div>
     <tr v-if="selectedOption == 1">
@@ -24,6 +24,13 @@
             :key="'freeMember-' + index">{{freeMember.cip}}</button>
     </tr>
     
+    <div v-if="selectedActivity != null">
+      <p>{{$t('requests')}}</p>
+      <tr>
+      <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
+            :key="'request-' + index">{{request.cipSeeking}}</button>
+    </tr>
+    </div>
    
 
   </div>
@@ -43,7 +50,8 @@ export default {
       'activities',
       'numberOfStudentsForActivity',
       'freeGroupsEdited',
-      'freeMembers'
+      'freeMembers',
+      'yourRequests'
     ]) 
   },
 
@@ -81,6 +89,61 @@ export default {
             idActivity: self.selectedActivity.idActivity
             })
         })
+        alert ('Demande acceptée')
+        .catch(function () {
+
+        });
+    },
+    confirmTeamPopup (freeGroup) {
+      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + freeGroup.cips;
+      
+      let popupOptions = {
+          html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
+          loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
+          reverse: false, // switch the button positions (left to right, and vise versa)
+          okText: 'DU COUP oui',
+          cancelText: 'EN FAIT non',
+          animation: 'zoom', // Available: "zoom", "bounce", "fade"
+          type: 'basic', 
+          backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
+          customClass: '' // Custom class to be injected into the parent node for the current dialog instance
+      };
+      let self = this
+      this.$dialog.confirm(confirmMessage, popupOptions)
+        .then(function () {
+          self.$store.dispatch('sendRequestTo', {
+            cipRequested: freeGroup.cips[0], 
+            idActivity: self.selectedActivity.idActivity
+            })
+        alert ('Demande envoyée')
+        })
+        .catch(function () {
+
+        });
+    },
+    confirmRequestPopup (request) {
+      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + request.cipSeeking;
+      
+      let popupOptions = {
+          html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
+          loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
+          reverse: false, // switch the button positions (left to right, and vise versa)
+          okText: 'DU COUP oui',
+          cancelText: 'EN FAIT non',
+          animation: 'zoom', // Available: "zoom", "bounce", "fade"
+          type: 'basic', 
+          backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
+          customClass: '' // Custom class to be injected into the parent node for the current dialog instance
+      };
+      let self = this
+      this.$dialog.confirm(confirmMessage, popupOptions)
+        .then(function () {
+          self.$store.dispatch('sendRequestTo', {
+            cipRequested: request.cipSeeking, 
+            idActivity: self.selectedActivity.idActivity
+            })
+        })
+        alert ('Demande accptée')
         .catch(function () {
 
         });
@@ -103,6 +166,7 @@ export default {
         this.$store.dispatch('getNumberOfStudentsForActivity', {
             selectedActivity: newlySelectedActivity
           })
+        this.$store.dispatch('getRequests')  
       }
     },
     selectedOption: function(newlySelectedOption) {

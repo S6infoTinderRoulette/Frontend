@@ -9,5 +9,6 @@ export default {
     numberOfStudentsForActivity : 0,
     freeGroups: [],
     freeMembers: [],
-    freeGroupsEdited: []
+    freeGroupsEdited: [],
+    yourRequests: []
 }
