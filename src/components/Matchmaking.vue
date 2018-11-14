@@ -20,7 +20,8 @@
       <tr v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</tr>
     </div>
     <tr v-if="selectedOption == 1">
-      <button v-for="(freeMember, index) in freeMembers" :key="'freeMember-' + index">{{freeMember.cip}}</button>
+      <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
+            :key="'freeMember-' + index">{{freeMember.cip}}</button>
     </tr>
     
    
@@ -55,6 +56,34 @@ export default {
         {id: 0, description:'Equipes dispos'},
         {id: 1, description:'Etudiants dispos'}
       ],
+    }
+  },
+  methods: {
+    confirmPopup (freeMember) {
+      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + freeMember.cip;
+      
+      let popupOptions = {
+          html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
+          loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
+          reverse: false, // switch the button positions (left to right, and vise versa)
+          okText: 'DU COUP oui',
+          cancelText: 'EN FAIT non',
+          animation: 'zoom', // Available: "zoom", "bounce", "fade"
+          type: 'basic', 
+          backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
+          customClass: '' // Custom class to be injected into the parent node for the current dialog instance
+      };
+      let self = this
+      this.$dialog.confirm(confirmMessage, popupOptions)
+        .then(function () {
+          self.$store.dispatch('sendRequestTo', {
+            cipRequested: freeMember.cip, 
+            idActivity: self.selectedActivity.idActivity
+            })
+        })
+        .catch(function () {
+
+        });
     }
   },
   created() {

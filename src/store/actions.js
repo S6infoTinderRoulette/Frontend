@@ -100,5 +100,26 @@ export default {
         .then(function (response) {
             alert('Groupes créés')
           })
+    },
+    sendRequestTo(context, {cipRequested, idActivity}) {
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'matchmaking/' + idActivity + '/',
+            data: {
+                cip: cipRequested
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+        .then(function (response) {
+            alert('Demande envoyée')
+          })
+          .catch(e => {
+            console.log(e)
+        })
     }
 }
