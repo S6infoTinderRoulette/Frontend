@@ -13,6 +13,12 @@
             <span slot="no-options">{{ $t('selectNoOptions') }}</span>
         </v-select> 
         </div>
+        <div v-if="(selectedGroupType !=null && selectedGroupType.idGroupType != 3)"> 
+            <p>{{$t('numActivity')}} :</p>
+            <v-select class="select" v-model="selectedNumActivity" label="type" :options="numActivityList" :placeholder="$t('numActivityList')">
+            <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+        </v-select> 
+        </div>
         <edit-groups v-if="isGroupCreated"
                 :group-of-groups="generatedGroups"
                 :idClass="selectedClass"
@@ -36,7 +42,8 @@ export default {
         ...mapState([
         'classes',
         'groupTypes',
-        'generatedGroups'
+        'generatedGroups',
+        'numActivityList'
         ]),
         isGroupCreated () {
             return this.generatedGroups !== undefined && this.generatedGroups.length !== 0
@@ -45,7 +52,8 @@ export default {
     data () {
         return {
             selectedClass: null,
-            selectedGroupType: null
+            selectedGroupType: null,
+            selectedNumActivity: null
         }
     },
     created() {
@@ -55,19 +63,42 @@ export default {
     watch: {
     selectedClass: function(newlySelectedClass) {
         if (newlySelectedClass != null && this.selectedGroupType != null) {
-        this.$store.dispatch('getGroups', {
-            selectedClass: newlySelectedClass,
-            selectedGroupType: this.selectedGroupType
-            })
+             if(this.selectedGroupType.idGroupType != 3){
+                 this.$store.dispatch('getIndex', {
+                    selectedClass: newlySelectedClass,
+                    selectedGroupType: this.selectedGroupType
+                })
+                this.selectedNumActivity = null
+             }else{
+                this.$store.dispatch('getGroups', {
+                    selectedClass: newlySelectedClass,
+                    selectedGroupType: this.selectedGroupType
+                })
+             }
         }
     },
     selectedGroupType: function(newlySelectedGroupType){
       if(newlySelectedGroupType != null && this.selectedClass != null){
-        this.$store.dispatch('getGroups', {
-            selectedGroupType: newlySelectedGroupType,
-            selectedClass: this.selectedClass,
-        })
+          if(newlySelectedGroupType.idGroupType != 3){
+            this.$store.dispatch('getIndex', {
+                selectedGroupType: newlySelectedGroupType,
+                selectedClass: this.selectedClass,
+            })
+            this.selectedNumActivity = null
+          }else{
+            this.$store.dispatch('getGroups', {
+                selectedGroupType: newlySelectedGroupType,
+                selectedClass: this.selectedClass,
+            })
+          }
       }
+    },
+    selectedNumActivity: function(newlySelectedNumActivity){
+        this.$store.dispatch('getGroupsWithIndex', {
+                selectedGroupType: this.selectedGroupType,
+                selectedClass: this.selectedClass,
+                selectedIndex: newlySelectedNumActivity
+        })
     }
   }
 }
