@@ -14,16 +14,16 @@ export default {
     updateGeneratedGroups (state, group) {
         state.generatedGroups = group || []
     },
-    updateClassesOfStudent (state, classesOfStudent){
+    updateClassesOfStudent (state, classesOfStudent) {
         state.classesOfStudent = classesOfStudent || []
     },
-    updateActivities(state, activities){
+    updateActivities(state, activities) {
         state.activities = activities || []
     },
-    updateNumberOfStudentsForActivity (state, numberOfStudentsForActivity){
+    updateNumberOfStudentsForActivity (state, numberOfStudentsForActivity) {
         state.numberOfStudentsForActivity = numberOfStudentsForActivity || []
     },
-    updateFreeGroups(state, freeGroups){
+    updateFreeGroups(state, freeGroups) {
         state.freeGroups = freeGroups || []
         let freeGroupsEdited = []
         freeGroups.forEach(elem => {
@@ -33,14 +33,17 @@ export default {
         })
         state.freeGroupsEdited = freeGroupsEdited || []
     },
-    updateFreeMembers(state, freeMembers){
+    updateFreeMembers(state, freeMembers) {
         state.freeMembers = freeMembers || []
     },
-    updateYourRequests(state, yourRequests){
+    updateYourRequests(state, yourRequests) {
         state.yourRequests = yourRequests || []
     },
-    updateTeamMembers(state, teamMembers){
-        state.teamMembers = teamMembers || []
+    updateUsersTeamMembers(state, teamMembers) {
+        state.usersTeamMembers = teamMembers || []
+    },
+    updateUsersTeamFull(state, isTeamFull) {
+        state.isUsersTeamFull = isTeamFull
     },
     updateIndexes (state, indexes) {
         state.numActivityList = indexes || []

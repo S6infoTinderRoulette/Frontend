@@ -1,52 +1,56 @@
 <template>
-   <div >
+  <div>
     <h2>{{ $t('matchmaking') }}</h2>
     <div>
       <p>{{$t('nameOfActivity')}} :</p>
       <v-select class="select" v-model="selectedClass" label="idClass" :options="classesOfStudent" :placeholder="$t('classes')">
         <span slot="no-options">{{ $t('selectNoOptions') }}</span>
       </v-select>
+    </div>
+    <div v-if="selectedClass != null">
       <p>{{$t('activityChosen')}} :</p>
       <v-select class="select" v-model="selectedActivity" label="idActivity" :options="activities" :placeholder="$t('activities')">
         <span slot="no-options">{{ $t('selectNoOptions') }}</span>
       </v-select>
-      <p v-if="selectedActivity != null">{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
     </div> 
-    <div v-if="!isFull" >
-      <div v-if="selectedActivity != null && numberOfStudentsForActivity > 2" v-for="option in options" :key="'option-' + option.id">
+
+    <div v-if="selectedClass != null && selectedActivity != null">
+      <div>
+        <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
+      </div>
+
+      <div v-if="!isUsersTeamFull" >
+        <p>{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
+        <div v-for="option in options" :key="'option-' + option.id">
         <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
       </div>
-      <div v-if="selectedOption == 0" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
-        <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
-        <tr v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</tr>
-      </div>
-      <tr v-if="selectedOption == 1">
+        
+        <div v-if="selectedOption == 0">
         <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
               :key="'freeMember-' + index">{{freeMember.cip}}</button>
-      </tr>
+        </div>
       
-      <div v-if="selectedActivity != null">
+        <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
+          <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
+          <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
+        </div>
+
+        <div>
         <p>{{$t('requests')}}</p>
-        <tr>
         <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
               :key="'request-' + index">{{request.cipSeeking}}</button>
-      </tr>
       </div>
     </div>
-    <div v-if="isFull">
-      <div v-if="selectedActivity != null" >
-        <p>{{$t('currentTeam')}}</p>
-        <tr v-for="(teamMember, index) in teamMembers" :key="'teamMember-' + index">{{teamMember.cip}}</tr>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import vSelect from 'vue-select'
+
 export default {
-  name: 'Matchmaking',
+  name: 'MatchMaking',
   components: {
     vSelect
   },
@@ -58,29 +62,29 @@ export default {
       'freeGroupsEdited',
       'freeMembers',
       'yourRequests',
-      'teamMembers'
-    ]) ,
-    isFull(){
-      return this.teamMembers != null && this.teamMembers.length == this.numberOfStudentsForActivity+1
+      'usersTeamMembers',
+      'isUsersTeamFull'
+    ]),
+    teamates() {
+      let teamateString = ''
+      let self = this
+      this.usersTeamMembers.forEach((teamate, index) => {
+        teamateString += index === 0 ? '' : (index === self.usersTeamMembers.length - 1 ? ' et ': ', ')
+        teamateString += teamate.cip
+      })
+      return teamateString
+    }
     },
-  },
-
   data () {
     return{
       selectedClass: null,
       selectedActivity: null,
-      selectedOption:null,
+      selectedOption: 0,
       options: [
-        {id: 0, description:'Equipes dispos'},
-        {id: 1, description:'Etudiants dispos'}
+        { id: 0, description:'Étudiants disponibles' },
+        { id: 1, description:'Équipes disponibles' }
       ],
-    }
-  },
-  methods: {
-    confirmPopup (freeMember) {
-      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + freeMember.cip;
-      
-      let popupOptions = {
+      popupOptions: {
           html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
           loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
           reverse: false, // switch the button positions (left to right, and vise versa)
@@ -90,70 +94,54 @@ export default {
           type: 'basic', 
           backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
           customClass: '' // Custom class to be injected into the parent node for the current dialog instance
-      };
+      }
+    }
+  },
+  methods: {
+    confirmPopup (freeMember) {
+      let confirmMessage = 'Souhaites-tu te mettre en équipe d\'activité avec ' + freeMember.cip + '?';
+      
       let self = this
-      this.$dialog.confirm(confirmMessage, popupOptions)
+      this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
           self.$store.dispatch('sendRequestTo', {
             cipRequested: freeMember.cip, 
             idActivity: self.selectedActivity.idActivity
-            })
+          })
+          alert ('Demande envoyée')
         })
-        alert ('Demande acceptée')
         .catch(function () {
 
         });
     },
     confirmTeamPopup (freeGroup) {
-      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + freeGroup.cips;
+      let confirmMessage = 'Souhaites-tu te mettre en équipe d\'activité avec ' + freeGroup.cips;
       
-      let popupOptions = {
-          html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
-          loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
-          reverse: false, // switch the button positions (left to right, and vise versa)
-          okText: 'DU COUP oui',
-          cancelText: 'EN FAIT non',
-          animation: 'zoom', // Available: "zoom", "bounce", "fade"
-          type: 'basic', 
-          backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
-          customClass: '' // Custom class to be injected into the parent node for the current dialog instance
-      };
       let self = this
-      this.$dialog.confirm(confirmMessage, popupOptions)
+      this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
           self.$store.dispatch('sendRequestTo', {
             cipRequested: freeGroup.cips[0], 
             idActivity: self.selectedActivity.idActivity
-            })
-        alert ('Demande envoyée')
+          })
+          alert ('Demande envoyée')
         })
         .catch(function () {
 
         });
     },
     confirmRequestPopup (request) {
-      let confirmMessage = 'Valide ton choix: tu veux tu etre en APP avec ' + request.cipSeeking;
+      let confirmMessage = 'Souhaites-tu te mettre en équipe d\'activité avec ' + request.cipSeeking;
       
-      let popupOptions = {
-          html: false, // set to true if your message contains HTML tags. eg: "Delete <b>Foo</b> ?"
-          loader: false, // set to true if you want the dailog to show a loader after click on "proceed"
-          reverse: false, // switch the button positions (left to right, and vise versa)
-          okText: 'DU COUP oui',
-          cancelText: 'EN FAIT non',
-          animation: 'zoom', // Available: "zoom", "bounce", "fade"
-          type: 'basic', 
-          backdropClose: true, // set to true to close the dialog when clicking outside of the dialog window, i.e. click landing on the mask 
-          customClass: '' // Custom class to be injected into the parent node for the current dialog instance
-      };
       let self = this
-      this.$dialog.confirm(confirmMessage, popupOptions)
+      this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
           self.$store.dispatch('sendRequestTo', {
             cipRequested: request.cipSeeking, 
             idActivity: self.selectedActivity.idActivity
-            })
+          })
+          alert ('Demande acceptée')
         })
-        alert ('Demande accptée')
         .catch(function () {
 
         });
@@ -173,33 +161,25 @@ export default {
     },
     selectedActivity: function(newlySelectedActivity) {
       if (newlySelectedActivity != null) {
+        Promise.all([
         this.$store.dispatch('getNumberOfStudentsForActivity', {
             selectedActivity: newlySelectedActivity
-          })
-        this.$store.dispatch('getRequests') 
+          }),
+          this.$store.dispatch('getRequests'),
         this.$store.dispatch('getTeamMembers', {
             selectedActivity: this.selectedActivity
-          }) 
-      }
-    },
-    selectedOption: function(newlySelectedOption) {
-      if (newlySelectedOption != null){
-        if(newlySelectedOption == 0) {
+          }),
+          this.$store.dispatch('getFreeMembers', {
+            selectedActivity: this.selectedActivity
+          }),
         this.$store.dispatch('getFreeGroups', {
             selectedActivity: this.selectedActivity
           })
-        }
-        else{
-          this.$store.dispatch('getFreeMembers', {
-            selectedActivity: this.selectedActivity
-          })
-        }
+        ])
       }
     }
   }
 }
-
-
 </script>
 
 <style>

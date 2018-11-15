@@ -19,7 +19,7 @@ export default {
     activities: 'Activités',
     numberOfStudentsForActivity: 'Groupe de {nb} étudiants',
     requests:'Tes demandes :',
-    currentTeam:'Tu es avec :',
+    currentTeam:'Ton équipe : {students}.',
     addGroup: 'Ajouter un groupe',
     groupManager: 'Gestion de groupes',
     numActivity: 'Numéro du cours',

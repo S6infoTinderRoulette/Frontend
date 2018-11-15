@@ -151,6 +151,9 @@ export default {
                 'cache-control': 'no-cache'
             }
         })
+        .then(function (response) {
+            alert('Groupes mis à jour')
+          })
     },
     getRequests(context) {
         axios.get(theAPIUrl + 'request/requested/')
@@ -158,13 +161,17 @@ export default {
                 context.commit('updateYourRequests', response.data)
             })
     },
-    getTeamMembers(context,{selectedActivity}) {
-        axios.get(theAPIUrl + 'matchmaking/userstatus/' + selectedActivity.idActivity + '/')
+    getTeamMembers(context, { selectedActivity }) {
+        Promise.all([
+            axios.get(theAPIUrl + 'matchmaking/userteam/' + selectedActivity.idActivity + '/')
             .then(function (response) {
-                context.commit('updateTeamMembers', response.data)
+                context.commit('updateUsersTeamMembers', response.data)
+            }),
+            axios.get(theAPIUrl + 'matchmaking/userteamfull/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateUsersTeamFull', response.data)
             })
-        .then(function (response) {
-            alert('Groupes mis à jour')
-          })
+        ])
+        
     }
 }
