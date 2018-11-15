@@ -3,5 +3,6 @@ export default {
     numberOfStudentInClass: 0,
     defaultNumberOfGroupSize: 0,
     groupTypes: [],
-    generatedGroups: []
+    generatedGroups: [],
+    numActivityList: []
 }

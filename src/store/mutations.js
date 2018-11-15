@@ -13,5 +13,8 @@ export default {
     },
     updateGeneratedGroups (state, group) {
         state.generatedGroups = group || []
+    },
+    updateIndexes (state, indexes) {
+        state.numActivityList = indexes || []
     }
 }

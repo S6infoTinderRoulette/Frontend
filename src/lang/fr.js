@@ -16,5 +16,7 @@ export default {
     addGroup: 'Ajouter un groupe',
     saveGroups: 'Sauvegarder les groupes',
     newGroupSize: 'Nouvelle taille par défaut des groupes',
-    groupManager: 'Gestion de groupes'
+    groupManager: 'Gestion de groupes',
+    numActivity: 'Numéro de l\'activité',
+    numActivityList: 'index'
 }
