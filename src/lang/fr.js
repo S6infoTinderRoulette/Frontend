@@ -19,5 +19,9 @@ export default {
     activities: 'Activités',
     numberOfStudentsForActivity: 'Groupe de {nb} étudiants',
     requests:'Tes demandes :',
-    currentTeam:'Tu es avec :'
+    currentTeam:'Tu es avec :',
+    addGroup: 'Ajouter un groupe',
+    groupManager: 'Gestion de groupes',
+    numActivity: 'Numéro du cours',
+    numActivityList: 'Index'
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(group, index) in groupOfGroups" :key="'group-' + index">
-            <p>{{ $tc('numberStudentInGroup', index + 1, group.length, { nbGroup: index + 1, nbStudents : group.length} )}}</p>
+            <p>{{ $tc('numberStudentInGroup', index + 1, (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length, { nbGroup: index + 1, nbStudents : (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length} )}}</p>
             <table>
                 <thead>
                     <tr>
@@ -9,19 +9,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(student, index1) in group" :key="'student-' + index1">
-                        <td>{{ student.cip }}</td>
-                    </tr>
+                    <draggable class="minheight" :list="group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group" :options="{ group:'students' }" @end="onEnd">
+                        <tr v-for="(student, index1) in (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group)" :key="'student-' + index1">
+                            <td>{{ student.cip }}</td>
+                        </tr>
+                    </draggable>
                 </tbody>
             </table>
-            
         </div>
-        <button @click="saveGroups">{{$t('saveGroups')}}</button>
+        <button @click="addGroup">{{ $t('addGroup') }}</button>
+        <button @click="saveGroups">{{ $t('saveGroups') }}</button>
     </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: {
         groupOfGroups: Array,
         idClass: Object,
@@ -29,6 +36,9 @@ export default {
         isCreating: Boolean
     },
     methods: {
+        addGroup() {
+            this.groupOfGroups.push([]);
+        },
         saveGroups() {
             if (this.isCreating) {
                 this.$store.dispatch('saveGroups', {
@@ -37,8 +47,15 @@ export default {
                     idGroupType: this.idGroupType.idGroupType
                 })
             } else {
-                // TODO : updateGroups with groupOfGroups (et les index pls) - pour l'onglet Manage Groups
+                this.$store.dispatch('saveUpdatedGroups', {
+                    groupOfGroups: this.groupOfGroups,
+                    idClass: this.idClass.idClass,
+                    idGroupType: this.idGroupType.idGroupType
+                })
             }
+        },
+        onEnd() {
+            this.$store.commit('updateGeneratedGroups', this.groupOfGroups)
         }
     }
 }

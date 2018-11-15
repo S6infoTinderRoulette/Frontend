@@ -11,5 +11,6 @@ export default {
     freeMembers: [],
     freeGroupsEdited: [],
     yourRequests: [],
-    teamMembers:[]
+    teamMembers:[],
+    numActivityList: []
 }

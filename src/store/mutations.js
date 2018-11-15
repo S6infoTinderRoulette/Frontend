@@ -41,5 +41,8 @@ export default {
     },
     updateTeamMembers(state, teamMembers){
         state.teamMembers = teamMembers || []
+    },
+    updateIndexes (state, indexes) {
+        state.numActivityList = indexes || []
     }
 }
