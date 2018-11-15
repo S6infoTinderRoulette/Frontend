@@ -1,47 +1,68 @@
 <template>
-  <div>
+  <div class="main">
+    <div class="basAdmin">
     <h2>{{ $t('activityPartitioner') }}</h2>
-    <div>
-      <p>{{$t('nameOfActivity')}} :</p>
-      <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
-        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-      </v-select>
-      <p v-if="selectedClass != null">{{ $tc('numberStudentInClass', numberOfStudentInClass, { nb: numberOfStudentInClass }) }}</p>
     </div>
-    <div>
-      <p>{{$t('TypeOfActivity')}} :</p>
-      <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
-        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-      </v-select> 
-    </div>
+    <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
+      <div style="transform: translateY(-50%);width:70%;height:70%;">
+        <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.5);">
+          
+          <div>
+            <p>{{$t('nameOfActivity')}} :</p>
+            <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
+              <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+            </v-select>
+            <p v-if="selectedClass != null">{{ $tc('numberStudentInClass', numberOfStudentInClass, { nb: numberOfStudentInClass }) }}</p>
+          </div>
 
-    <div v-for="pill in pills" :key="'pill-' + pill.id">
-      <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
-    </div>
-    <p v-if="selectedPillId==0">{{ $tc('defaultNumberOfGroupSize', defaultNumberOfGroupSize, { nb: defaultNumberOfGroupSize }) }}</p>
+          <div style ="margin-top:10px;">
+            <p>{{$t('TypeOfActivity')}} :</p>
+            <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
+              <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+            </v-select> 
+          </div>
 
+          <div style = "margin-top:20px;">
+          <div v-for="pill in pills" :key="'pill-' + pill.id">
+            <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
+          </div>
+            <p style = "margin-top:20px;" v-if="selectedPillId==0">{{ $tc('defaultNumberOfGroupSize', defaultNumberOfGroupSize, { nb: defaultNumberOfGroupSize }) }}</p>
+          </div>
 
-    <div v-if="selectedPillId==1">
-      <p>{{$t('newGroupSize')}} :</p>
-      <input type="number" min="0" v-model="newDefaultGroupSize">
-    </div>
+          <div v-if="selectedPillId==1">
+            <p>{{$t('newGroupSize')}} :</p>
+            <b-form-input type="number" min="0.00" v-model="newDefaultGroupSize"></b-form-input>
+          </div> 
 
-    <div v-if="selectedPillId==2">
-      <span>{{ $t('groupSizes') }}</span>
-      <div v-for="(groupSize, index) in groupSizes" :key="index">
-        <input type="number" min="0" v-model="groupSizes[index]"/>
-        <button @click="removeSize(index)">x</button>
-      </div>
-      <button @click="addAGroupSize">+</button>
-    </div>
+          <div v-if="selectedPillId==2">
+            <span>{{ $t('groupSizes') }}</span>
+            <div v-for="(groupSize, index) in groupSizes" :key="index">
+              <div>
+                <b-input-group>
 
-    <button @click="createGroups">{{ $t('createGroups') }}</button>
+                  <b-form-input type="number" min="0.00" v-model="groupSizes[index]"></b-form-input>
 
-    <edit-groups v-if="isGroupCreated" 
+                  <b-input-group-append>
+                    <b-btn variant="outline-secondary" @click="removeSize(index)" >x</b-btn>
+                  </b-input-group-append>
+                </b-input-group>
+              </div>
+            </div>
+            <button @click="addAGroupSize">+</button>
+          </div>
+
+          <div style="display:flex;justify-content:center;align-items:center;margin-top:10px;" >
+            <button class ="btn btn-primary btn-large" style="display:flex;justify-content:center;align-items:center;" @click="createGroups">{{ $t('createGroups') }}</button>
+          </div>
+              <edit-groups v-if="isGroupCreated" 
                 is-creating 
                 :group-of-groups="generatedGroups"
                 :idClass="selectedClass"
                 :idGroupType="selectedGroupType"></edit-groups>
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

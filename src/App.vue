@@ -14,6 +14,6 @@ export default {
   }
 }
 </script>
+<style src="@/assets/customStyle.css"></style>
+<style src="@/assets/main.css"></style>
 
-<style src="@/assets/main.css">
-</style>
