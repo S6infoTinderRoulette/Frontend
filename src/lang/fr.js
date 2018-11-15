@@ -17,6 +17,6 @@ export default {
     saveGroups: 'Sauvegarder les groupes',
     newGroupSize: 'Nouvelle taille par défaut des groupes',
     groupManager: 'Gestion de groupes',
-    numActivity: 'Numéro de l\'activité',
-    numActivityList: 'index'
+    numActivity: 'Numéro du cours',
+    numActivityList: 'Index'
 }
