@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 var theAPIUrl = "http://localhost:8000/"
+axios.defaults.withCredentials = true
 
 export default {
     getClasses(context) {
@@ -31,6 +32,9 @@ export default {
         axios.get(theAPIUrl + 'memberclass/connected/')
             .then(function (response) {
                 context.commit('updateClassesOfStudent', response.data)
+            })
+            .catch(function (e) {
+                debugger
             })
     },
     getActivities(context, {selectedClass} ){
@@ -120,6 +124,12 @@ export default {
         axios.get(theAPIUrl + 'request/requested/')
             .then(function (response) {
                 context.commit('updateYourRequests', response.data)
+            })
+    },
+    getTeamMembers(context,{selectedActivity}){
+        axios.get(theAPIUrl + 'matchmaking/userstatus/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateTeamMembers', response.data)
             })
     }
 }

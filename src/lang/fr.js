@@ -18,5 +18,6 @@ export default {
     activityChosen: 'Choix de l\'activité:',
     activities: 'Activités',
     numberOfStudentsForActivity: 'Groupe de {nb} étudiants',
-    requests:'Tes demandes :'
+    requests:'Tes demandes :',
+    currentTeam:'Tu es avec :'
 }

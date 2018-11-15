@@ -38,5 +38,8 @@ export default {
     },
     updateYourRequests(state, yourRequests){
         state.yourRequests = yourRequests || []
+    },
+    updateTeamMembers(state, teamMembers){
+        state.teamMembers = teamMembers || []
     }
 }

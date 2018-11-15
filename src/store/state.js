@@ -10,5 +10,6 @@ export default {
     freeGroups: [],
     freeMembers: [],
     freeGroupsEdited: [],
-    yourRequests: []
+    yourRequests: [],
+    teamMembers:[]
 }

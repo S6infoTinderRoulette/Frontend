@@ -1,5 +1,5 @@
 <template>
-  <div>
+   <div >
     <h2>{{ $t('matchmaking') }}</h2>
     <div>
       <p>{{$t('nameOfActivity')}} :</p>
@@ -11,28 +11,34 @@
         <span slot="no-options">{{ $t('selectNoOptions') }}</span>
       </v-select>
       <p v-if="selectedActivity != null">{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
-    </div>  
-    <div v-if="selectedActivity != null && numberOfStudentsForActivity > 2" v-for="option in options" :key="'option-' + option.id">
-      <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
+    </div> 
+    <div v-if="!isFull" >
+      <div v-if="selectedActivity != null && numberOfStudentsForActivity > 2" v-for="option in options" :key="'option-' + option.id">
+        <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
+      </div>
+      <div v-if="selectedOption == 0" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
+        <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
+        <tr v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</tr>
+      </div>
+      <tr v-if="selectedOption == 1">
+        <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
+              :key="'freeMember-' + index">{{freeMember.cip}}</button>
+      </tr>
+      
+      <div v-if="selectedActivity != null">
+        <p>{{$t('requests')}}</p>
+        <tr>
+        <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
+              :key="'request-' + index">{{request.cipSeeking}}</button>
+      </tr>
+      </div>
     </div>
-    <div v-if="selectedOption == 0" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
-      <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
-      <tr v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</tr>
+    <div v-if="isFull">
+      <div v-if="selectedActivity != null" >
+        <p>{{$t('currentTeam')}}</p>
+        <tr v-for="(teamMember, index) in teamMembers" :key="'teamMember-' + index">{{teamMember.cip}}</tr>
+      </div>
     </div>
-    <tr v-if="selectedOption == 1">
-      <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
-            :key="'freeMember-' + index">{{freeMember.cip}}</button>
-    </tr>
-    
-    <div v-if="selectedActivity != null">
-      <p>{{$t('requests')}}</p>
-      <tr>
-      <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
-            :key="'request-' + index">{{request.cipSeeking}}</button>
-    </tr>
-    </div>
-   
-
   </div>
 </template>
 
@@ -51,8 +57,12 @@ export default {
       'numberOfStudentsForActivity',
       'freeGroupsEdited',
       'freeMembers',
-      'yourRequests'
-    ]) 
+      'yourRequests',
+      'teamMembers'
+    ]) ,
+    isFull(){
+      return this.teamMembers != null && this.teamMembers.length == this.numberOfStudentsForActivity+1
+    },
   },
 
   data () {
@@ -166,7 +176,10 @@ export default {
         this.$store.dispatch('getNumberOfStudentsForActivity', {
             selectedActivity: newlySelectedActivity
           })
-        this.$store.dispatch('getRequests')  
+        this.$store.dispatch('getRequests') 
+        this.$store.dispatch('getTeamMembers', {
+            selectedActivity: this.selectedActivity
+          }) 
       }
     },
     selectedOption: function(newlySelectedOption) {
