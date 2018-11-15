@@ -74,19 +74,19 @@ export default {
           })
     },
     getGroups(context, {selectedClass, selectedGroupType}) {
-        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/'+ selectedGroupType.idGroupType+ '/')
+        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
             .then(function (response) {
                 context.commit('updateGeneratedGroups', response.data)
             })
     },
     getIndex(context, {selectedClass, selectedGroupType}) {
-        axios.get(theAPIUrl + 'existingGroup/index/' + selectedClass.idClass + '/'+ selectedGroupType.idGroupType+ '/')
+        axios.get(theAPIUrl + 'existingGroup/index/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
             .then(function (response) {
                 context.commit('updateIndexes', response.data)
             })
     },
     getGroupsWithIndex(context, {selectedClass, selectedGroupType, selectedIndex}) {
-        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/'+ selectedGroupType.idGroupType+ '/' + selectedIndex + '/')
+        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/' + selectedIndex + '/')
             .then(function (response) {
                 context.commit('updateGeneratedGroups', response.data)
             })
@@ -104,7 +104,7 @@ export default {
             }
         })
         .then(function (response) {
-            alert('Groupes créés')
+            alert('Groupes mis à jour')
           })
     }
 }

@@ -2,7 +2,7 @@
     <div>
         <router-link :to="{ name: 'Partitioner'}">{{ $t('partitioner') }}</router-link>
         <router-link to="/matchmaking">{{ $t('matchmaking') }}</router-link>
-        <router-link to="/GroupManager">{{ $t('groupManager') }}</router-link>
+        <router-link to="/groupmanager">{{ $t('groupManager') }}</router-link>
     </div>
 </template>
 

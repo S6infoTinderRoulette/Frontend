@@ -20,7 +20,7 @@ export default new Router({
       component: Matchmaking
     },
     {
-      path: '/GroupManager',
+      path: '/groupmanager',
       name: 'GroupManager',
       component: GroupManager
     }
