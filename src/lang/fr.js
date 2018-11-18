@@ -23,5 +23,7 @@ export default {
     addGroup: 'Ajouter un groupe',
     groupManager: 'Gestion de groupes',
     numActivity: 'Numéro du cours',
-    numActivityList: 'Index'
+    numActivityList: 'Index',
+    numberOfAdditionnalStudents: 'Il te faut 1 personne de plus dans ton équipe|Il te faut {nb} personnes de plus dans ton équipe',
+    leaveTeam:'Je quitte mon équipe'
 }

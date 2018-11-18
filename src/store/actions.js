@@ -35,7 +35,6 @@ export default {
                 context.commit('updateClassesOfStudent', response.data)
             })
             .catch(function (e) {
-                debugger
             })
     },
     getActivities(context, {selectedClass} ){
@@ -172,6 +171,24 @@ export default {
                 context.commit('updateUsersTeamFull', response.data)
             })
         ])
-        
+    },
+    leaveTeam(context, { idActivity }){
+        axios({
+            method: 'delete',
+            url: theAPIUrl + 'matchmaking/' + idActivity + '/',
+            data: null,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+        .then(function (response) {
+            alert('done!')
+        })
+        .catch(e => {
+            console.log(e)
+        })
     }
 }

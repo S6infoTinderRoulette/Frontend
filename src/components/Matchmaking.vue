@@ -16,11 +16,14 @@
 
     <div v-if="selectedClass != null && selectedActivity != null">
       <div>
+        <button v-if="teamates.length != 0" @click="leaveTeam()">{{$t('leaveTeam') }}</button>
         <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
       </div>
 
       <div v-if="!isUsersTeamFull" >
         <p>{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
+        <p>{{ $tc('numberOfAdditionnalStudents', numberOfAdditionnalStudents, { nb: numberOfAdditionnalStudents = this.numberOfStudentsForActivity - this.usersTeamMembers.length }) }}</p>
+
         <div v-for="option in options" :key="'option-' + option.id">
         <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
       </div>
@@ -80,6 +83,7 @@ export default {
       selectedClass: null,
       selectedActivity: null,
       selectedOption: 0,
+      numberOfAdditionnalStudents:0,
       options: [
         { id: 0, description:'Étudiants disponibles' },
         { id: 1, description:'Équipes disponibles' }
@@ -144,6 +148,19 @@ export default {
         })
         .catch(function () {
 
+        });
+    },
+    leaveTeam(){
+      let confirmMessage = 'Tu veux-tu quitter ton équipe?';
+      
+      let self = this
+      this.$dialog.confirm(confirmMessage, this.popupOptions)
+        .then(function () {
+          self.$store.dispatch('leaveTeam', {
+            idActivity: self.selectedActivity.idActivity
+          })
+        })
+        .catch(function () {
         });
     }
   },
