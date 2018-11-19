@@ -108,9 +108,10 @@ export default {
     sendRequestTo(context, {cipRequested, idActivity}) {
         axios({
             method: 'post',
-            url: theAPIUrl + 'matchmaking/' + idActivity + '/',
+            url: theAPIUrl + 'matchmaking/request/',
             data: {
-                cip: cipRequested
+                cipRequested: cipRequested,
+                idActivity : idActivity
             },
             async: true,
             crossDomain: true,
@@ -189,6 +190,37 @@ export default {
         })
         .catch(e => {
             console.log(e)
+        })
+    },
+    acceptRequest(context,{cipRequested, idActivity}){
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'matchmaking/' + idActivity +'/',
+            data: {
+                cip: cipRequested
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+    },
+    addFriend(context, {newFriend, idActivity}){
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'friendRequest/request/',
+            data: {
+                cip: newFriend.cip,
+                idActivity: idActivity
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
         })
     }
 }

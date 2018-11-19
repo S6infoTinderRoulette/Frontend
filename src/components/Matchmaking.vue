@@ -16,8 +16,13 @@
 
     <div v-if="selectedClass != null && selectedActivity != null">
       <div>
-        <button v-if="teamates.length != 0" @click="leaveTeam()">{{$t('leaveTeam') }}</button>
+        <button v-if="usersTeamMembers.length > 1" @click="leaveTeamPopup()">{{$t('leaveTeam') }}</button>
         <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
+
+        <div v-for="(teamMember, index) in usersTeamMembers" :key="'teamMember-' + index">
+          <p>{{$t('addFriend')}}</p>
+          <button @click="addFriendPopup(teamMember)">{{teamMember.cip}}</button>
+        </div>
       </div>
 
       <div v-if="!isUsersTeamFull" >
@@ -25,8 +30,8 @@
         <p>{{ $tc('numberOfAdditionnalStudents', numberOfAdditionnalStudents, { nb: numberOfAdditionnalStudents = this.numberOfStudentsForActivity - this.usersTeamMembers.length }) }}</p>
 
         <div v-for="option in options" :key="'option-' + option.id">
-        <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
-      </div>
+          <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
+        </div>
         
         <div v-if="selectedOption == 0">
         <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
@@ -39,13 +44,13 @@
         </div>
 
         <div>
-        <p>{{$t('requests')}}</p>
-        <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
+          <p>{{$t('requests')}}</p>
+          <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
               :key="'request-' + index">{{request.cipSeeking}}</button>
+        </div>
       </div>
     </div>
-      </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -140,7 +145,7 @@ export default {
       let self = this
       this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
-          self.$store.dispatch('sendRequestTo', {
+          self.$store.dispatch('acceptRequest', {
             cipRequested: request.cipSeeking, 
             idActivity: self.selectedActivity.idActivity
           })
@@ -150,13 +155,26 @@ export default {
 
         });
     },
-    leaveTeam(){
+    leaveTeamPopup(){
       let confirmMessage = 'Tu veux-tu quitter ton équipe?';
       
       let self = this
       this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
           self.$store.dispatch('leaveTeam', {
+            idActivity: self.selectedActivity.idActivity
+          })
+        })
+        .catch(function () {
+        });
+    },
+    addFriendPopup(teamMember){
+      let confirmMessage = 'Est-ce que '+ teamMember.cip + 'est ton pote?';
+      let self = this
+      this.$dialog.confirm(confirmMessage, this.popupOptions)
+        .then(function () {
+          self.$store.dispatch('addFriend', {
+            newFriend: teamMember,
             idActivity: self.selectedActivity.idActivity
           })
         })
