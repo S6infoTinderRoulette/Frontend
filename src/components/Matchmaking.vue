@@ -18,11 +18,6 @@
       <div>
         <button v-if="usersTeamMembers.length > 1" @click="leaveTeamPopup()">{{$t('leaveTeam') }}</button>
         <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
-
-        <div v-for="(teamMember, index) in usersTeamMembers" :key="'teamMember-' + index">
-          <p>{{$t('addFriend')}}</p>
-          <button @click="addFriendPopup(teamMember)">{{teamMember.cip}}</button>
-        </div>
       </div>
 
       <div v-if="!isUsersTeamFull" >
@@ -43,10 +38,13 @@
           <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
         </div>
 
-        <div>
+        <div v-if="yourRequests.length !=0">
           <p>{{$t('requests')}}</p>
           <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
               :key="'request-' + index">{{request.cipSeeking}}</button>
+        </div>
+        <div v-if="yourRequests.length == 0">
+          <p>{{$t('noRequests')}}</p>
         </div>
       </div>
     </div>
@@ -162,19 +160,6 @@ export default {
       this.$dialog.confirm(confirmMessage, this.popupOptions)
         .then(function () {
           self.$store.dispatch('leaveTeam', {
-            idActivity: self.selectedActivity.idActivity
-          })
-        })
-        .catch(function () {
-        });
-    },
-    addFriendPopup(teamMember){
-      let confirmMessage = 'Est-ce que '+ teamMember.cip + 'est ton pote?';
-      let self = this
-      this.$dialog.confirm(confirmMessage, this.popupOptions)
-        .then(function () {
-          self.$store.dispatch('addFriend', {
-            newFriend: teamMember,
             idActivity: self.selectedActivity.idActivity
           })
         })
