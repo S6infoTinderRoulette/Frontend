@@ -61,42 +61,42 @@ export default {
     vSelect
   },
   computed: {
-      ...mapState([
-        'classesOfStudent',
-        'activities',
-        'numberOfStudentsForActivity',
-        'freeGroupsEdited',
-        'freeMembers',
-        'yourRequests',
-        'usersTeamMembers',
-        'isUsersTeamFull',
-        'membersRequested'
-      ]),
-      teamates() {
-        let teamateString = ''
-        let self = this
-        this.usersTeamMembers.forEach((teamate, index) => {
-          teamateString += index === 0 ? '' : (index === self.usersTeamMembers.length - 1 ? ' et ': ', ')
-          teamateString += teamate.cip
-        })
-        return teamateString
-      },
-      freeMembersUpdated(){
-        return this.freeMembers.filter(val => !this.membersRequested.includes(val.cip))
-      },
-      freeGroupsUpdated(){
-        let groupEdited=this.freeGroupsEdited
-        groupEdited.forEach((group) =>{
-          group.cips.forEach((cip) =>{
-            if (this.membersRequested.includes(cip)){
-              var index = groupEdited.indexOf(cip);
-              groupEdited = groupEdited.splice(index, 1);
-            }
-          })
-        })
-        return groupEdited
-      }
+    ...mapState([
+      'classesOfStudent',
+      'activities',
+      'numberOfStudentsForActivity',
+      'freeGroupsEdited',
+      'freeMembers',
+      'yourRequests',
+      'usersTeamMembers',
+      'isUsersTeamFull',
+      'membersRequested'
+    ]),
+    teamates() {
+      let teamateString = ''
+      let self = this
+      this.usersTeamMembers.forEach((teamate, index) => {
+        teamateString += index === 0 ? '' : (index === self.usersTeamMembers.length - 1 ? ' et ': ', ')
+        teamateString += teamate.cip
+      })
+      return teamateString
     },
+    freeMembersUpdated(){
+      return this.freeMembers.filter(val => !this.membersRequested.includes(val.cip))
+    },
+    freeGroupsUpdated(){
+      let groupEdited = this.freeGroupsEdited
+      groupEdited.forEach((group) => {
+        group.cips.forEach((cip) => {
+          if (this.membersRequested.includes(cip)) {
+            var index = groupEdited.indexOf(cip);
+            groupEdited = groupEdited.splice(index, 1);
+          }
+        })
+      })
+      return groupEdited
+    }
+  },
   data () {
     return{
       selectedClass: null,
@@ -198,7 +198,7 @@ export default {
     selectedActivity: function(newlySelectedActivity) {
       if (newlySelectedActivity != null) {
         Promise.all([
-        this.$store.dispatch('getNumberOfStudentsForActivity', {
+          this.$store.dispatch('getNumberOfStudentsForActivity', {
             selectedActivity: newlySelectedActivity
           }),
           this.$store.dispatch('getRequests'),
