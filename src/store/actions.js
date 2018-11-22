@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+axios.defaults.withCredentials = true
+
 var theAPIUrl = "http://localhost:8000/"
 
 export default {
@@ -16,7 +18,7 @@ export default {
             })
     },
     getGroupTypes(context) {
-        axios.get(theAPIUrl + 'grouptypes/')
+        axios.get(theAPIUrl + 'grouptype/')
             .then(function (response) {
                 context.commit('updateGroupTypes', response.data)
             })
@@ -69,6 +71,40 @@ export default {
         })
         .then(function (response) {
             alert('Groupes créés')
+          })
+    },
+    getGroups(context, {selectedClass, selectedGroupType}) {
+        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
+            .then(function (response) {
+                context.commit('updateGeneratedGroups', response.data)
+            })
+    },
+    getIndex(context, {selectedClass, selectedGroupType}) {
+        axios.get(theAPIUrl + 'existingGroup/index/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
+            .then(function (response) {
+                context.commit('updateIndexes', response.data)
+            })
+    },
+    getGroupsWithIndex(context, {selectedClass, selectedGroupType, selectedIndex}) {
+        axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/' + selectedIndex + '/')
+            .then(function (response) {
+                context.commit('updateGeneratedGroups', response.data)
+            })
+    },
+    saveUpdatedGroups(context, {groupOfGroups, idClass, idGroupType}) {
+        axios({
+            method: 'put',
+            url: theAPIUrl + 'saveGroup/' + idClass + '/' + idGroupType + '/',
+            data: groupOfGroups,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+        .then(function (response) {
+            alert('Groupes mis à jour')
           })
     }
 }

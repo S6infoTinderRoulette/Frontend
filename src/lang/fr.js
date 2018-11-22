@@ -15,5 +15,8 @@ export default {
     numberStudentInGroup: 'Groupe {nbGroup} ({nbStudents} personnes) ',
     addGroup: 'Ajouter un groupe',
     saveGroups: 'Sauvegarder les groupes',
-    newGroupSize: 'Nouvelle taille par défaut des groupes'
+    newGroupSize: 'Nouvelle taille par défaut des groupes',
+    groupManager: 'Gestion de groupes',
+    numActivity: 'Numéro du cours',
+    numActivityList: 'Index'
 }
