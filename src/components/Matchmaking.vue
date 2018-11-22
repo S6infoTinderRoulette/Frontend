@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <h2>{{ $t('matchmaking') }}</h2>
     <div>
       <p>{{$t('nameOfActivity')}} :</p>
