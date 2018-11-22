@@ -29,6 +29,38 @@ export default {
                 context.commit('updateDefaultNumberOfGroupSize', response.data)
             })
     },
+    getClassesOfStudent(context){
+        axios.get(theAPIUrl + 'memberclass/connected/')
+            .then(function (response) {
+                context.commit('updateClassesOfStudent', response.data)
+            })
+            .catch(function (e) {
+            })
+    },
+    getActivities(context, {selectedClass} ){
+        axios.get(theAPIUrl + 'activities/associatedTo/' + selectedClass.idClass + '/' )
+            .then(function (response) {
+                context.commit('updateActivities', response.data)
+            })
+    },
+    getNumberOfStudentsForActivity(context, {selectedActivity} ){        
+        axios.get(theAPIUrl + 'activities/' + selectedActivity.idActivity + '/numberOfPartners/' )
+            .then(function (response) {
+                context.commit('updateNumberOfStudentsForActivity', response.data)
+            })
+    },
+    getFreeGroups(context, {selectedActivity}){
+        axios.get(theAPIUrl + 'matchmaking/groups/' + selectedActivity.idActivity + '/true/' )
+            .then(function (response) {
+                context.commit('updateFreeGroups', response.data)
+            })
+    },
+    getFreeMembers(context, {selectedActivity}){
+        axios.get(theAPIUrl + 'matchmaking/members/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateFreeMembers', response.data)
+            })
+    },
     createGroups(context, {selectedClass, selectedGroupType, newDefaultGroupSize, groupSizes}) {
         let data =  {
             idClass: selectedClass.idClass,
@@ -73,6 +105,22 @@ export default {
             alert('Groupes créés')
           })
     },
+    sendRequestTo(context, {cipRequested, idActivity}) {
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'matchmaking/request/',
+            data: {
+                cipRequested: cipRequested,
+                idActivity : idActivity
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+    },
     getGroups(context, {selectedClass, selectedGroupType}) {
         axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
             .then(function (response) {
@@ -106,5 +154,71 @@ export default {
         .then(function (response) {
             alert('Groupes mis à jour')
           })
+    },
+    getRequests(context) {
+        axios.get(theAPIUrl + 'request/requested/')
+            .then(function (response) {
+                context.commit('updateYourRequests', response.data)
+            })
+    },
+    getTeamMembers(context, { selectedActivity }) {
+        Promise.all([
+            axios.get(theAPIUrl + 'matchmaking/userteam/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateUsersTeamMembers', response.data)
+            }),
+            axios.get(theAPIUrl + 'matchmaking/userteamfull/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateUsersTeamFull', response.data)
+            })
+        ])
+    },
+    leaveTeam(context, { idActivity }){
+        axios({
+            method: 'delete',
+            url: theAPIUrl + 'matchmaking/' + idActivity + '/',
+            data: null,
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+        .then(function (response) {
+        })
+        .catch(e => {
+        })
+    },
+    acceptRequest(context,{cipRequested, idActivity}){
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'matchmaking/' + idActivity +'/',
+            data: {
+                cip: cipRequested
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
+    },
+    addFriend(context, {newFriend, idActivity}){
+        axios({
+            method: 'post',
+            url: theAPIUrl + 'friendRequest/request/',
+            data: {
+                cip: newFriend.cip,
+                idActivity: idActivity
+            },
+            async: true,
+            crossDomain: true,
+            headers: {
+                'content-type': 'application/json',
+                'cache-control': 'no-cache'
+            }
+        })
     }
 }
