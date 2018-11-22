@@ -44,11 +44,11 @@
 
                   <b-input-group-append>
                     <b-btn variant="outline-secondary" @click="removeSize(index)" >x</b-btn>
+                    <b-btn variant="outline-secondary" @click="addAGroupSize">+</b-btn>
                   </b-input-group-append>
                 </b-input-group>
               </div>
             </div>
-            <button @click="addAGroupSize">+</button>
           </div>
 
           <div style="display:flex;justify-content:center;align-items:center;margin-top:10px;" >
