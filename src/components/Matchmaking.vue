@@ -91,10 +91,10 @@ export default {
       })
       return teamateString
     },
-    freeMembersUpdated(){
+    freeMembersUpdated() {
       return this.freeMembers.filter(val => !this.membersRequested.includes(val.cip))
     },
-    freeGroupsUpdated(){
+    freeGroupsUpdated() {
       let groupEdited = this.freeGroupsEdited
       groupEdited.forEach((group) => {
         group.cips.forEach((cip) => {

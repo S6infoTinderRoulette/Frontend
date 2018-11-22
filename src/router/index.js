@@ -3,16 +3,17 @@ import Router from 'vue-router'
 import Partitioner from '@/components/Partitioner'
 import Matchmaking from '@/components/Matchmaking'
 import GroupManager from '@/components/GroupManager'
+import store from '../store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Partitioner',
-      component: Partitioner,
+      component: Partitioner
     },
     {
       path: '/matchmaking',
@@ -26,3 +27,21 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (store.state.selfStatus === 1) {
+    if (to.path.includes('matchmaking')) {
+      next()
+    } else {
+      next(false)
+    }
+  } else {
+    if (to.path.includes('matchmaking')) {
+      next(false)
+    } else {
+      next()
+    }
+  }
+})
+
+export default router

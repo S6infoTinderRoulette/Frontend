@@ -1,4 +1,7 @@
 export default {
+    updateSelfStatus(state, status) {
+        state.selfStatus = status || 1
+    },
     updateClasses (state, classes) {
         state.classes = classes || []
     },
