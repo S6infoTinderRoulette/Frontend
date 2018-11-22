@@ -1,53 +1,63 @@
 <template>
   <div class="main">
+    <div class="basAdmin">
     <h2>{{ $t('matchmaking') }}</h2>
-    <div>
-      <p>{{$t('nameOfActivity')}} :</p>
-      <v-select class="select" v-model="selectedClass" label="idClass" :options="classesOfStudent" :placeholder="$t('classes')">
-        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-      </v-select>
     </div>
-    <div v-if="selectedClass != null">
-      <p>{{$t('activityChosen')}} :</p>
-      <v-select class="select" v-model="selectedActivity" label="idActivity" :options="activities" :placeholder="$t('activities')">
-        <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-      </v-select>
-    </div> 
+    <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
+        <div style="transform: translateY(-50%);width:70%;height:70%;">
+            <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.5);">
+              <div>
+                <p>{{$t('nameOfActivity')}} :</p>
+                <v-select class="select" v-model="selectedClass" label="idClass" :options="classesOfStudent" :placeholder="$t('classes')">
+                  <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+                </v-select>
+              </div>
 
-    <div v-if="selectedClass != null && selectedActivity != null">
-      <div>
-        <button v-if="usersTeamMembers.length > 1" @click="leaveTeamPopup()">{{$t('leaveTeam') }}</button>
-        <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
-      </div>
+              <div v-if="selectedClass != null">
+                <p>{{$t('activityChosen')}} :</p>
+                <v-select class="select" v-model="selectedActivity" label="idActivity" :options="activities" :placeholder="$t('activities')">
+                  <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+                </v-select>
+              </div> 
 
-      <div v-if="!isUsersTeamFull" >
-        <p>{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
-        <p>{{ $tc('numberOfAdditionnalStudents', numberOfAdditionnalStudents, { nb: numberOfAdditionnalStudents = this.numberOfStudentsForActivity - this.usersTeamMembers.length }) }}</p>
+              <div v-if="selectedClass != null && selectedActivity != null">
+                <div>
+                  <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-if="usersTeamMembers.length > 1" @click="leaveTeamPopup()">{{$t('leaveTeam') }}</button>
+                  <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
+                </div>
 
-        <div v-for="option in options" :key="'option-' + option.id">
-          <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
-        </div>
-        
-        <div v-if="selectedOption == 0">
-        <button v-for="(freeMember, index) in freeMembersUpdated" @click="confirmPopup(freeMember)"
-              :key="'freeMember-' + index">{{freeMember.cip}}</button>
-        </div>
-      
-        <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsUpdated" :key="'freeGroup-' + index">
-          <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
-          <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
-        </div>
+                <div v-if="!isUsersTeamFull" >
+                  <p>{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
+                  <p>{{ $tc('numberOfAdditionnalStudents', numberOfAdditionnalStudents, { nb: numberOfAdditionnalStudents = this.numberOfStudentsForActivity - this.usersTeamMembers.length }) }}</p>
 
-        <div v-if="yourRequests.length !=0">
-          <p>{{$t('requests')}}</p>
-          <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
-              :key="'request-' + index">{{request.cipSeeking}}</button>
+                  <div v-for="option in options" :key="'option-' + option.id">
+                    <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
+                  </div>
+                  
+                  <div v-if="selectedOption == 0">
+                  <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
+                        :key="'freeMember-' + index">{{freeMember.cip}}</button>
+                  </div>
+                
+                  <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
+                    <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
+                    <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
+                  </div>
+
+                  <div v-if="yourRequests.length !=0">
+                    <p>{{$t('requests')}}</p>
+                    <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
+                        :key="'request-' + index">{{request.cipSeeking}}</button>
+                  </div>
+
+                  <div v-else>
+                    <p>{{$t('noRequests')}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div v-else>
-          <p>{{$t('noRequests')}}</p>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
