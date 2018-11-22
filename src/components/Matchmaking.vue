@@ -43,7 +43,7 @@
           <button v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
               :key="'request-' + index">{{request.cipSeeking}}</button>
         </div>
-        <div v-if="yourRequests.length == 0">
+        <div v-else>
           <p>{{$t('noRequests')}}</p>
         </div>
       </div>
@@ -154,7 +154,7 @@ export default {
         });
     },
     leaveTeamPopup(){
-      let confirmMessage = 'Tu veux-tu quitter ton équipe?';
+      let confirmMessage = 'Veux-tu quitter ton équipe?';
       
       let self = this
       this.$dialog.confirm(confirmMessage, this.popupOptions)
