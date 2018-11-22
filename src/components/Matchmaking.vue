@@ -29,11 +29,11 @@
         </div>
         
         <div v-if="selectedOption == 0">
-        <button v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
+        <button v-for="(freeMember, index) in freeMembersUpdated" @click="confirmPopup(freeMember)"
               :key="'freeMember-' + index">{{freeMember.cip}}</button>
         </div>
       
-        <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
+        <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsUpdated" :key="'freeGroup-' + index">
           <button @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
           <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
         </div>
@@ -61,25 +61,41 @@ export default {
     vSelect
   },
   computed: {
-    ...mapState([
-      'classesOfStudent',
-      'activities',
-      'numberOfStudentsForActivity',
-      'freeGroupsEdited',
-      'freeMembers',
-      'yourRequests',
-      'usersTeamMembers',
-      'isUsersTeamFull'
-    ]),
-    teamates() {
-      let teamateString = ''
-      let self = this
-      this.usersTeamMembers.forEach((teamate, index) => {
-        teamateString += index === 0 ? '' : (index === self.usersTeamMembers.length - 1 ? ' et ': ', ')
-        teamateString += teamate.cip
-      })
-      return teamateString
-    }
+      ...mapState([
+        'classesOfStudent',
+        'activities',
+        'numberOfStudentsForActivity',
+        'freeGroupsEdited',
+        'freeMembers',
+        'yourRequests',
+        'usersTeamMembers',
+        'isUsersTeamFull',
+        'membersRequested'
+      ]),
+      teamates() {
+        let teamateString = ''
+        let self = this
+        this.usersTeamMembers.forEach((teamate, index) => {
+          teamateString += index === 0 ? '' : (index === self.usersTeamMembers.length - 1 ? ' et ': ', ')
+          teamateString += teamate.cip
+        })
+        return teamateString
+      },
+      freeMembersUpdated(){
+        return this.freeMembers.filter(val => !this.membersRequested.includes(val.cip))
+      },
+      freeGroupsUpdated(){
+        let groupEdited=this.freeGroupsEdited
+        groupEdited.forEach((group) =>{
+          group.cips.forEach((cip) =>{
+            if (this.membersRequested.includes(cip)){
+              var index = groupEdited.indexOf(cip);
+              groupEdited = groupEdited.splice(index, 1);
+            }
+          })
+        })
+        return groupEdited
+      }
     },
   data () {
     return{
@@ -186,13 +202,16 @@ export default {
             selectedActivity: newlySelectedActivity
           }),
           this.$store.dispatch('getRequests'),
-        this.$store.dispatch('getTeamMembers', {
+          this.$store.dispatch('getTeamMembers', {
             selectedActivity: this.selectedActivity
           }),
           this.$store.dispatch('getFreeMembers', {
             selectedActivity: this.selectedActivity
           }),
         this.$store.dispatch('getFreeGroups', {
+            selectedActivity: this.selectedActivity
+          }),
+        this.$store.dispatch('getRequested', {
             selectedActivity: this.selectedActivity
           })
         ])
