@@ -1,0 +1,185 @@
+       
+	    body {
+            font-family: "Lato", sans-serif;
+            background: #ffffff url("./cutecat.jpg");
+			background-repeat: no-repeat;
+    			background-attachment: fixed;
+            object-fit:fill;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 20%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+
+        }
+		
+		.buttonside {
+			width:80%;
+		    white-space: normal;
+		    padding: 6px 6px 6px 6px;
+			margin-left: 32px;
+            text-decoration: none;
+            font-size: 25px;
+			background-color: #111;
+			text-align:left;
+			opacity: 0.6;
+			border-color: #111;
+            display: block;
+		}
+		
+		.buttonside:hover {
+			opacity:1;
+		}
+
+        .main {
+            margin-left: 20%;
+            overflow-x:hidden;
+        }
+		
+		 .basAdmin {
+            width:80%;
+            top:10%;
+            height:5%;
+            margin: auto;
+            position: absolute;
+        }
+
+        .bas2Data {
+            margin-top:5%;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+	
+		.bas2Personnes {
+            clear:both;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+		
+        .bas2Admin {
+            width:80%;
+            top:20%;
+            height: 5%;
+            margin: auto;
+            position: absolute;
+        }
+
+        .bas3Data {
+            margin-top:5%;
+            margin-bottom:5%;
+            clear:both;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+		
+		 .bas4Data {
+            margin-top:5%;
+            margin-bottom:5%;
+            clear:both;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+		
+		.bas5Data {
+            margin-top:6%;
+            margin-bottom:5%;
+            clear:both;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+        }
+		
+		
+		.bas3Admin {
+            width:80%;
+            top:40%;
+            height: 5%;
+            margin: auto;
+            position: absolute;
+        }
+		
+        .toprightcorner{
+            position:absolute;
+            top:10px;
+            right:10px;
+        }
+
+        .topleftcorner{
+            position:relative;
+            top:10px;
+            left: 10px;
+        }
+		
+        .chartjs-wrapper{
+            width:80%;
+        }
+		
+        .upperAdmin {
+            width:80%;
+            margin: auto;
+            position: absolute;
+            top:10%;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+		
+		#recherchePersonne {
+		    background-position: 10px 12px; 
+    			background-repeat: no-repeat; 
+    			font-size: 16px; 
+    			padding: 12px 20px 12px 40px; 
+    			border: 1px solid #ddd; 
+    			margin-left: 30px; 
+		}
+		
+		#rechercheNom {
+		    background-position: 10px 12px; 
+    			background-repeat: no-repeat; 
+    			font-size: 16px; 
+    			padding: 12px 20px 12px 40px; 
+    			border: 1px solid #ddd; 
+    			margin-left: 30px; 
+		}
+		
+
+		#rechercheService {
+		    background-position: 10px 12px; 
+    			background-repeat: no-repeat; 
+    			font-size: 16px; 
+    			padding: 12px 20px 12px 40px; 
+    			border: 1px solid #ddd; 
+    			margin-left: 30px; 
+		}	
+		
+		#rechercheFiliale {
+		    background-position: 10px 12px; 
+    			background-repeat: no-repeat; 
+    			font-size: 16px; 
+    			padding: 12px 20px 12px 40px; 
+    			border: 1px solid #ddd; 
+    			margin-left: 30px; 
+		}
+		
+				
+		#recherchePays {
+		    background-position: 10px 12px; 
+    			background-repeat: no-repeat; 
+    			font-size: 16px; 
+    			padding: 12px 20px 12px 40px; 
+    			border: 1px solid #ddd; 
+    			margin-left: 30px; 
+		}

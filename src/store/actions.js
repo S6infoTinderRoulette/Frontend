@@ -186,10 +186,8 @@ export default {
             }
         })
         .then(function (response) {
-            alert('done!')
         })
         .catch(e => {
-            console.log(e)
         })
     },
     acceptRequest(context,{cipRequested, idActivity}){
