@@ -111,7 +111,7 @@ export default {
       this.groupSizes.push('')
     },
     createGroups() {
-      if (this.selectedGroupType != null) {
+      if (this.selectedGroupType != null && this.selectedClass != null) {
         this.$store.dispatch('createGroups', {
           selectedClass: this.selectedClass,
           selectedGroupType: this.selectedGroupType,

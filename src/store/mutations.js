@@ -50,5 +50,12 @@ export default {
     },
     updateIndexes (state, indexes) {
         state.numActivityList = indexes || []
-    }
+    },
+    updateMembersRequested(state, yourRequests) {
+        let membersRequested = []
+        yourRequests.forEach(elem => {
+            membersRequested.push(elem.cipRequested)
+        })
+        state.membersRequested = membersRequested || []
+    },
 }
