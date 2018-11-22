@@ -1,9 +1,9 @@
        
 	    body {
             font-family: "Lato", sans-serif;
-            background: #ffffff url("./cutecat.jpg");
-			background-repeat: no-repeat;
-    			background-attachment: fixed;
+            background: #ffffff url("./cutecattiny.jpg");
+			background-repeat: repeat;
+    		background-attachment: fixed;
             object-fit:fill;
         }
 

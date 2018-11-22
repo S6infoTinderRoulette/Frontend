@@ -1,28 +1,38 @@
 <template>
-    <div>
+  <div class="main">
+        <div class="basAdmin">
         <h2>{{ $t('groupManager') }}</h2>
-        <div>
-            <p>{{$t('nameOfActivity')}} :</p>
-            <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
-                <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-            </v-select>
         </div>
-        <div>
-            <p>{{$t('TypeOfActivity')}} :</p>
-            <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
-                <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-            </v-select> 
+        
+        <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
+            <div style="transform: translateY(-50%);width:70%;height:70%;">
+                <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.5);">
+                    <div>
+                        <p>{{$t('nameOfActivity')}} :</p>
+                        <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
+                            <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+                        </v-select>
+                    </div>
+                    <div style ="margin-top:10px;">
+                        <p>{{$t('TypeOfActivity')}} :</p>
+                        <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
+                            <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+                        </v-select> 
+                    </div>
+                    <div v-if="(selectedGroupType !=null && selectedGroupType.idGroupType != 3)"> 
+                        <p>{{$t('numActivity')}} :</p>
+                        <v-select class="select" v-model="selectedNumActivity" label="type" :options="numActivityList" :placeholder="$t('numActivityList')">
+                            <span slot="no-options">{{ $t('selectNoOptions') }}</span>
+                        </v-select> 
+                    </div>
+                    <edit-groups v-if="isGroupCreated"
+                            :group-of-groups="generatedGroups"
+                            :idClass="selectedClass"
+                            :idGroupType="selectedGroupType">
+                    </edit-groups>
+                </div>
+            </div>
         </div>
-        <div v-if="(selectedGroupType !=null && selectedGroupType.idGroupType != 3)"> 
-            <p>{{$t('numActivity')}} :</p>
-            <v-select class="select" v-model="selectedNumActivity" label="type" :options="numActivityList" :placeholder="$t('numActivityList')">
-                <span slot="no-options">{{ $t('selectNoOptions') }}</span>
-            </v-select> 
-        </div>
-        <edit-groups v-if="isGroupCreated"
-                :group-of-groups="generatedGroups"
-                :idClass="selectedClass"
-                :idGroupType="selectedGroupType"></edit-groups>
     </div>
 </template>
 
