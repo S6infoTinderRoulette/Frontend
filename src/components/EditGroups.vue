@@ -42,18 +42,20 @@ export default {
             this.groupOfGroups.push([]);
         },
         saveGroups() {
-            if (this.isCreating) {
-                this.$store.dispatch('saveGroups', {
-                    groupOfGroups: this.groupOfGroups,
-                    idClass: this.idClass.idClass,
-                    idGroupType: this.idGroupType.idGroupType
-                })
-            } else {
-                this.$store.dispatch('saveUpdatedGroups', {
-                    groupOfGroups: this.groupOfGroups,
-                    idClass: this.idClass.idClass,
-                    idGroupType: this.idGroupType.idGroupType
-                })
+            if (this.idClass !== null && this.idGroupType !== null) {
+                if (this.isCreating) {
+                    this.$store.dispatch('saveGroups', {
+                        groupOfGroups: this.groupOfGroups,
+                        idClass: this.idClass.idClass,
+                        idGroupType: this.idGroupType.idGroupType
+                    })
+                } else {
+                    this.$store.dispatch('saveUpdatedGroups', {
+                        groupOfGroups: this.groupOfGroups,
+                        idClass: this.idClass.idClass,
+                        idGroupType: this.idGroupType.idGroupType
+                    })
+                }
             }
         },
         onEnd() {
