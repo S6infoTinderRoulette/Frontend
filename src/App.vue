@@ -13,7 +13,15 @@ export default {
     NavigationBar
   },
   created () {
+    const self = this
     this.$store.dispatch('findSelfStatus')
+      .then(response => {
+        if (response.data == 1) {
+          this.$router.push('/matchmaking')
+        } else {
+          this.$router.push('/')
+        }
+      })
   }
 }
 </script>

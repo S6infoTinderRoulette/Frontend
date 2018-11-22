@@ -1,5 +1,5 @@
 export default {
-    selfStatus: 1,
+    selfStatus: 0,
     classes: [],
     numberOfStudentInClass: 0,
     defaultNumberOfGroupSize: 0,

@@ -6,10 +6,11 @@ var theAPIUrl = "http://localhost:8000/"
 
 export default {
     findSelfStatus(context) {
-        axios.get(theAPIUrl + 'findself/')
-            .then(function (response) {
+        const call = axios.get(theAPIUrl + 'findself/')
+        call.then(function (response) {
                 context.commit('updateSelfStatus', response.data)
             })
+        return call
     },
     getClasses(context) {
         axios.get(theAPIUrl + 'classes/')
