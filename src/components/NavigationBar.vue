@@ -1,14 +1,18 @@
 <template>
     <div class ="sidenav">
-        <button class="btn btn-dark buttonside" onclick="window.location.href='/'">{{ $t('partitioner') }}</button>
-        <button class="btn btn-dark buttonside" onclick="window.location.href='/matchmaking'">{{ $t('matchmaking') }}</button>
-        <button class="btn btn-dark buttonside" onclick="window.location.href='/groupmanager'">{{ $t('groupManager') }}</button>
+        <button class="btn btn-dark buttonside" @click="goTo('/')">{{ $t('partitioner') }}</button>
+        <button class="btn btn-dark buttonside" @click="goTo('/matchmaking')">{{ $t('matchmaking') }}</button>
+        <button class="btn btn-dark buttonside" @click="goTo('/groupmanager')">{{ $t('groupManager') }}</button>
     </div>
 </template>
 
 <script>
 export default {
-
+    methods: {
+        goTo(path) {
+            this.$router.push(path)
+        }
+    }
 }
 </script>
 
