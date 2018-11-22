@@ -220,5 +220,11 @@ export default {
                 'cache-control': 'no-cache'
             }
         })
+    },
+    getRequested(context, {selectedActivity}){
+        axios.get(theAPIUrl + 'request/seeking/' + selectedActivity.idActivity + '/')
+            .then(function (response) {
+                context.commit('updateMembersRequested', response.data)
+            })
     }
 }

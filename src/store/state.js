@@ -13,5 +13,6 @@ export default {
     yourRequests: [],
     usersTeamMembers: [],
     isUsersTeamFull: false,
-    numActivityList: []
+    numActivityList: [],
+    membersRequested:[]
 }

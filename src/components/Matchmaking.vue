@@ -79,7 +79,8 @@ export default {
       'freeMembers',
       'yourRequests',
       'usersTeamMembers',
-      'isUsersTeamFull'
+      'isUsersTeamFull',
+      'membersRequested'
     ]),
     teamates() {
       let teamateString = ''
@@ -89,8 +90,23 @@ export default {
         teamateString += teamate.cip
       })
       return teamateString
-    }
     },
+    freeMembersUpdated(){
+      return this.freeMembers.filter(val => !this.membersRequested.includes(val.cip))
+    },
+    freeGroupsUpdated(){
+      let groupEdited = this.freeGroupsEdited
+      groupEdited.forEach((group) => {
+        group.cips.forEach((cip) => {
+          if (this.membersRequested.includes(cip)) {
+            var index = groupEdited.indexOf(cip);
+            groupEdited = groupEdited.splice(index, 1);
+          }
+        })
+      })
+      return groupEdited
+    }
+  },
   data () {
     return{
       selectedClass: null,
@@ -192,17 +208,20 @@ export default {
     selectedActivity: function(newlySelectedActivity) {
       if (newlySelectedActivity != null) {
         Promise.all([
-        this.$store.dispatch('getNumberOfStudentsForActivity', {
+          this.$store.dispatch('getNumberOfStudentsForActivity', {
             selectedActivity: newlySelectedActivity
           }),
           this.$store.dispatch('getRequests'),
-        this.$store.dispatch('getTeamMembers', {
+          this.$store.dispatch('getTeamMembers', {
             selectedActivity: this.selectedActivity
           }),
           this.$store.dispatch('getFreeMembers', {
             selectedActivity: this.selectedActivity
           }),
         this.$store.dispatch('getFreeGroups', {
+            selectedActivity: this.selectedActivity
+          }),
+        this.$store.dispatch('getRequested', {
             selectedActivity: this.selectedActivity
           })
         ])
