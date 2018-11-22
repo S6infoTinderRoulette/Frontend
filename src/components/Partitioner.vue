@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="basAdmin">
-    <h2>{{ $t('activityPartitioner') }}</h2>
+      <h2>{{ $t('activityPartitioner') }}</h2>
     </div>
     <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
       <div style="transform: translateY(-50%);width:70%;height:70%;">
@@ -54,12 +54,12 @@
           <div style="display:flex;justify-content:center;align-items:center;margin-top:10px;" >
             <button class ="btn btn-primary btn-large" style="display:flex;justify-content:center;align-items:center;" @click="createGroups">{{ $t('createGroups') }}</button>
           </div>
-              <edit-groups v-if="isGroupCreated" 
-                is-creating 
-                :group-of-groups="generatedGroups"
-                :idClass="selectedClass"
-                :idGroupType="selectedGroupType"></edit-groups>
-
+          
+          <edit-groups v-if="isGroupCreated" 
+            is-creating 
+            :group-of-groups="generatedGroups"
+            :idClass="selectedClass"
+            :idGroupType="selectedGroupType"></edit-groups>
         </div>
       </div>
     </div>

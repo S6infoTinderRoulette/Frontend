@@ -5,6 +5,12 @@ axios.defaults.withCredentials = true
 var theAPIUrl = "http://localhost:8000/"
 
 export default {
+    findSelfStatus(context) {
+        axios.get(theAPIUrl + 'findself/')
+            .then(function (response) {
+                context.commit('updateSelfStatus', response.data)
+            })
+    },
     getClasses(context) {
         axios.get(theAPIUrl + 'classes/')
             .then(function (response) {

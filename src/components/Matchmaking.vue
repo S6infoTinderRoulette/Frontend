@@ -80,7 +80,7 @@ export default {
       })
       return teamateString
     }
-    },
+  },
   data () {
     return{
       selectedClass: null,

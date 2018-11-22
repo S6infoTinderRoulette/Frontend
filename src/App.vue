@@ -11,6 +11,9 @@ export default {
   name: 'App',
   components: {
     NavigationBar
+  },
+  created () {
+    this.$store.dispatch('findSelfStatus')
   }
 }
 </script>
