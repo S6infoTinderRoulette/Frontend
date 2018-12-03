@@ -150,10 +150,11 @@ export default {
           self.$store.dispatch('sendRequestTo', {
             cipRequested: freeMember.cip, 
             idActivity: self.selectedActivity.idActivity
-          })
-          alert ('Demande envoyée')
-          self.$store.dispatch('getFreeMembers', {
-            selectedActivity: this.selectedActivity
+          }).then(() => {
+            alert ('Demande envoyée')
+            self.$store.dispatch('getFreeMembers', {
+              selectedActivity: self.selectedActivity
+            })
           })
         })
         .catch(function () {
@@ -169,10 +170,11 @@ export default {
           self.$store.dispatch('sendRequestTo', {
             cipRequested: freeGroup.cips[0], 
             idActivity: self.selectedActivity.idActivity
-          })
-          alert ('Demande envoyée')
-          this.$store.dispatch('getFreeGroups', {
-            selectedActivity: this.selectedActivity
+          }).then(() => {
+            alert ('Demande envoyée')
+            self.$store.dispatch('getFreeGroups', {
+              selectedActivity: self.selectedActivity
+            })
           })
         })
         .catch(function () {
