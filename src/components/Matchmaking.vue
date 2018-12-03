@@ -5,54 +5,65 @@
     </div>
     <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
         <div style="transform: translateY(-50%);width:70%;height:70%;">
-            <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.5);">
+            <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.9);">
               <div>
-                <p>{{$t('nameOfActivity')}} :</p>
+                <span>{{$t('nameOfActivity')}} :</span>
                 <v-select class="select" v-model="selectedClass" label="idClass" :options="classesOfStudent" :placeholder="$t('classes')">
                   <span slot="no-options">{{ $t('selectNoOptions') }}</span>
                 </v-select>
               </div>
 
-              <div v-if="selectedClass != null">
-                <p>{{$t('activityChosen')}} :</p>
+              <div v-if="selectedClass != null" style="padding-top: 20px">
+                <span>{{$t('activityChosen')}} :</span>
                 <v-select class="select" v-model="selectedActivity" label="idActivity" :options="activities" :placeholder="$t('activities')">
                   <span slot="no-options">{{ $t('selectNoOptions') }}</span>
                 </v-select>
               </div> 
 
               <div v-if="selectedClass != null && selectedActivity != null">
-                <div>
+                <div v-if="usersTeamMembers.length > 0">
                   <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-if="usersTeamMembers.length > 1" @click="leaveTeamPopup()">{{$t('leaveTeam') }}</button>
                   <p>{{ $tc('currentTeam', teamates, { students: teamates }) }}</p>
                 </div>
 
                 <div v-if="!isUsersTeamFull" >
                   <p>{{ $tc('numberOfStudentsForActivity', numberOfStudentsForActivity, { nb: numberOfStudentsForActivity }) }}</p>
-                  <p>{{ $tc('numberOfAdditionnalStudents', numberOfAdditionnalStudents, { nb: numberOfAdditionnalStudents = this.numberOfStudentsForActivity - this.usersTeamMembers.length }) }}</p>
 
-                  <div v-for="option in options" :key="'option-' + option.id">
-                    <input type="radio"  v-model="selectedOption" :value="option.id" >{{ option.description}}
-                  </div>
-                  
-                  <div v-if="selectedOption == 0">
-                  <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-for="(freeMember, index) in freeMembers" @click="confirmPopup(freeMember)"
-                        :key="'freeMember-' + index">{{freeMember.cip}}</button>
-                  </div>
-                
-                  <div v-if="selectedOption == 1" v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
-                    <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" @click="confirmTeamPopup(freeGroup)">{{freeGroup.idGroup}}</button>
-                    <p v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
+                  <div style="margin-bottom: 10px">
+                    <div v-if="yourRequests.length !=0">
+                      <p style="margin: 0px">{{ $t('requests') }}</p>
+                      <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
+                          :key="'request-' + index">{{request.cipSeeking}}</button>
+                    </div>
+                    <div v-else>
+                      <p>{{ $t('noRequests') }}</p>
+                    </div>
                   </div>
 
-                  <div v-if="yourRequests.length !=0">
-                    <p>{{$t('requests')}}</p>
-                    <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" v-for="(request, index) in yourRequests" @click="confirmRequestPopup(request)"
-                        :key="'request-' + index">{{request.cipSeeking}}</button>
-                  </div>
-
-                  <div v-else>
-                    <p>{{$t('noRequests')}}</p>
-                  </div>
+                  <table class="table table-striped table-dark">
+                    <thead>
+                      <tr>
+                        <th>Cips</th>
+                        <th>Rejoindre l'équipe</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(freeGroup, index) in freeGroupsEdited" :key="'freeGroup-' + index">
+                        <td>
+                          <p style="margin: 0px" v-for="(cip, index1) in freeGroup.cips" :key="'student-' + index1">{{cip}}</p>
+                        </td>
+                        <td>
+                          <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" @click="confirmPopup(freeGroup)">Rejoindre l'équipe</button>
+                        </td>
+                      </tr>
+                      <tr v-for="(freeMember, index) in freeMembers" :key="'freeMember-' + index">
+                        <td>{{ freeMember.cip }}</td>
+                        <td>
+                          <button style="margin-bottom:5px;margin-right:5px;" class="btn btn-primary" @click="confirmPopup(freeMember)">Rejoindre</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -111,7 +122,6 @@ export default {
     return{
       selectedClass: null,
       selectedActivity: null,
-      selectedOption: 0,
       numberOfAdditionnalStudents:0,
       options: [
         { id: 0, description:'Étudiants disponibles' },
@@ -142,6 +152,9 @@ export default {
             idActivity: self.selectedActivity.idActivity
           })
           alert ('Demande envoyée')
+          self.$store.dispatch('getFreeMembers', {
+            selectedActivity: this.selectedActivity
+          })
         })
         .catch(function () {
 
@@ -158,6 +171,9 @@ export default {
             idActivity: self.selectedActivity.idActivity
           })
           alert ('Demande envoyée')
+          this.$store.dispatch('getFreeGroups', {
+            selectedActivity: this.selectedActivity
+          })
         })
         .catch(function () {
 
@@ -198,8 +214,11 @@ export default {
   },
 
   watch: {
-    selectedClass: function(newlySelectedClass){
-      if (newlySelectedClass != null){
+    selectedClass: function(newlySelectedClass, oldSelectedClass) {
+      if (newlySelectedClass != null) {
+        if (newlySelectedClass != oldSelectedClass) {
+          this.selectedActivity = null
+        }
         this.$store.dispatch('getActivities', {
             selectedClass: newlySelectedClass
           })
@@ -218,10 +237,10 @@ export default {
           this.$store.dispatch('getFreeMembers', {
             selectedActivity: this.selectedActivity
           }),
-        this.$store.dispatch('getFreeGroups', {
+          this.$store.dispatch('getFreeGroups', {
             selectedActivity: this.selectedActivity
           }),
-        this.$store.dispatch('getRequested', {
+          this.$store.dispatch('getRequested', {
             selectedActivity: this.selectedActivity
           })
         ])
