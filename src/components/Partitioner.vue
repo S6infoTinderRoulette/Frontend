@@ -5,7 +5,7 @@
     </div>
     <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
       <div style="transform: translateY(-50%);width:70%;height:70%;">
-        <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.5);">
+        <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.9);">
           
           <div>
             <p>{{$t('nameOfActivity')}} :</p>
