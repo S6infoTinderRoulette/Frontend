@@ -113,7 +113,7 @@ export default {
           })
     },
     sendRequestTo(context, {cipRequested, idActivity}) {
-        axios({
+        return axios({
             method: 'post',
             url: theAPIUrl + 'matchmaking/request/',
             data: {
