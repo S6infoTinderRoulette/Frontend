@@ -1,12 +1,9 @@
 <template>
-  <div class="main">
-        <div class="basAdmin">
-            <h2>{{ $t('groupManager') }}</h2>
-        </div>
-        
+  <div class="main">        
         <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
             <div style="transform: translateY(-50%);width:70%;height:70%;">
-                <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.9);">
+                <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.9);padding-top:2rem !important;">
+                    <h2>{{ $t('groupManager') }}</h2>
                     <div>
                         <span>{{$t('nameOfActivity')}} :</span>
                         <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
