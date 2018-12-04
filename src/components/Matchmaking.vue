@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="basAdmin">
-    <h2>{{ $t('matchmaking') }}</h2>
+      <h2>{{ $t('matchmaking') }}</h2>
     </div>
     <div style="display: flex;align-items: center;justify-content: center;" class = "bas2Admin">
         <div style="transform: translateY(-50%);width:70%;height:70%;">
