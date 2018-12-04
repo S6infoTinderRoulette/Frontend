@@ -8,7 +8,7 @@
         <div class="jumbotron" style="border-radius:10px;background-color:rgba(217,247,247,0.9);">
           
           <div>
-            <p>{{$t('nameOfActivity')}} :</p>
+            <span>{{$t('nameOfActivity')}} :</span>
             <v-select class="select" v-model="selectedClass" label="idClass" :options="classes" :placeholder="$t('classes')">
               <span slot="no-options">{{ $t('selectNoOptions') }}</span>
             </v-select>
@@ -16,21 +16,21 @@
           </div>
 
           <div style ="margin-top:10px;">
-            <p>{{$t('TypeOfActivity')}} :</p>
+            <span>{{$t('TypeOfActivity')}} :</span>
             <v-select class="select" v-model="selectedGroupType" label="type" :options="groupTypes" :placeholder="$t('groupType')">
               <span slot="no-options">{{ $t('selectNoOptions') }}</span>
             </v-select> 
           </div>
 
           <div style = "margin-top:20px;">
-          <div v-for="pill in pills" :key="'pill-' + pill.id">
-            <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
-          </div>
+            <div v-for="pill in pills" :key="'pill-' + pill.id">
+              <input type="radio"  v-model="selectedPillId" :value="pill.id" >{{ pill.description}}
+            </div>
             <p style = "margin-top:20px;" v-if="selectedPillId==0">{{ $tc('defaultNumberOfGroupSize', defaultNumberOfGroupSize, { nb: defaultNumberOfGroupSize }) }}</p>
           </div>
 
           <div v-if="selectedPillId==1">
-            <p>{{$t('newGroupSize')}} :</p>
+            <span>{{$t('newGroupSize')}} :</span>
             <b-form-input type="number" min="0.00" v-model="newDefaultGroupSize"></b-form-input>
           </div> 
 
@@ -57,7 +57,7 @@
           
           <edit-groups v-if="isGroupCreated" 
             is-creating 
-            :group-of-groups="generatedGroups"
+            :group-of-groups="createdGroups"
             :idClass="selectedClass"
             :idGroupType="selectedGroupType"></edit-groups>
         </div>
@@ -83,10 +83,10 @@ export default {
       'numberOfStudentInClass',
       'groupTypes', 
       'defaultNumberOfGroupSize',
-      'generatedGroups'
+      'createdGroups'
     ]),
     isGroupCreated () {
-      return this.generatedGroups !== undefined && this.generatedGroups.length !== 0
+      return this.createdGroups !== undefined && this.createdGroups.length !== 0
     } 
   },
   data () {
@@ -119,11 +119,19 @@ export default {
           groupSizes: this.selectedPillId === 2 ? this.groupSizes : null
         })
       }
+    },
+    resetGroups(selClass, selGroupType) {
+      if (selClass === null || selGroupType === null) {
+        this.$store.commit('updateCreatedGroups', [])
+      }
     }
   },
   created() {
     this.$store.dispatch('getClasses')
     this.$store.dispatch('getGroupTypes')
+  },
+  beforeDestroy: function () {
+        this.$store.commit('updateCreatedGroups', [])
   },
   watch: {
     selectedClass: function(newlySelectedClass) {
@@ -132,13 +140,15 @@ export default {
             selectedClass: newlySelectedClass
           })
       }
+      this.resetGroups(newlySelectedClass, this.selectedGroupType)
     },
     selectedGroupType: function(newlySelectedGroupType){
-      if(newlySelectedGroupType != null){
+      if(newlySelectedGroupType != null) {
         this.$store.dispatch('getDefaultNumberOfGroupSize', {
           selectedGroupType:newlySelectedGroupType
         })
       }
+      this.resetGroups(this.selectedClass, newlySelectedGroupType)
     }
   }
   

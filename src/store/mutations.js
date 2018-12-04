@@ -14,8 +14,11 @@ export default {
     updateDefaultNumberOfGroupSize (state, defaultNumberOfGroupSize) {
         state.defaultNumberOfGroupSize = defaultNumberOfGroupSize || 0;
     },
-    updateGeneratedGroups (state, group) {
-        state.generatedGroups = group || []
+    updateCreatedGroups (state, group) {
+        state.createdGroups = group || []
+    },
+    updateImportedGroups (state, group) {
+        state.importedGroups = group || []
     },
     updateClassesOfStudent (state, classesOfStudent) {
         state.classesOfStudent = classesOfStudent || []

@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div style="margin-top: 20px">
         <div v-for="(group, index) in groupOfGroups" :key="'group-' + index">
-            <p>{{ $tc('numberStudentInGroup', index + 1, (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length, { nbGroup: index + 1, nbStudents : (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length} )}}</p>
+            <p style="margin-bottom: 0px">{{ $tc('numberStudentInGroup', index + 1, (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length, { nbGroup: index + 1, nbStudents : (group.hasOwnProperty('groupStudentList') ? group.groupStudentList : group).length} )}}</p>
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>

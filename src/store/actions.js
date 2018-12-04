@@ -90,7 +90,7 @@ export default {
             }
         })
           .then(function (response) {
-            context.commit('updateGeneratedGroups', response.data)
+            context.commit('updateCreatedGroups', response.data)
           })
           .catch(e => {
               console.log(e)
@@ -131,7 +131,7 @@ export default {
     getGroups(context, {selectedClass, selectedGroupType}) {
         axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/')
             .then(function (response) {
-                context.commit('updateGeneratedGroups', response.data)
+                context.commit('updateImportedGroups', response.data)
             })
     },
     getIndex(context, {selectedClass, selectedGroupType}) {
@@ -143,7 +143,7 @@ export default {
     getGroupsWithIndex(context, {selectedClass, selectedGroupType, selectedIndex}) {
         axios.get(theAPIUrl + 'existingGroup/' + selectedClass.idClass + '/' + selectedGroupType.idGroupType + '/' + selectedIndex + '/')
             .then(function (response) {
-                context.commit('updateGeneratedGroups', response.data)
+                context.commit('updateImportedGroups', response.data)
             })
     },
     saveUpdatedGroups(context, {groupOfGroups, idClass, idGroupType}) {
